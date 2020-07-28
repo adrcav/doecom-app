@@ -35,9 +35,44 @@ export const CauseTitleSection = styled.p`
   margin-top: 15px;
   margin-bottom: 20px;
 
-  @media (min-height: 992px) and (max-width: 1200px) {
+  @media (min-width: 992px) and (max-width: 1200px) {
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 9px;
+  }
+`;
+
+export const CauseFeature = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+
+  .CauseFeature__icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: ${colors.muted.m4};
+  }
+
+  .CauseFeature__content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6px;
+  }
+
+  .CauseFeature__title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: ${colors.base.dark};
+    line-height: 1.1rem;
+    margin: 0;
+  }
+
+  .CauseFeature__description {
+    font-size: .9rem;
+    color: ${colors.muted.m4};
+    line-height: 1.25rem;
+    text-align: justify;
+    margin: 5px 0 0;
   }
 `;
 

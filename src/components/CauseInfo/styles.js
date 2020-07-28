@@ -25,6 +25,8 @@ export const Container = styled.div`
   .cause-account {
     margin: 0;
     flex: 1;
+    max-width: 100%;
+    overflow: hidden;
 
     h2 {
       font-size: 1.4rem;
@@ -32,6 +34,10 @@ export const Container = styled.div`
       line-height: 1.6rem;
       margin: 0;
       color: ${colors.base.dark};
+      max-width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
 
       @media (max-width: 768px) {
         font-size: 1.2rem;

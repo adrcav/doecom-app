@@ -50,10 +50,10 @@
   "registerSuccess.backButton": "Ir para página principal",
 
   "causes.suggestions": "Sugestões para você",
-  "causes.addYourCause": "Cadastre sua causa",
+  "causes.addYourCause": "Cadastrar causa",
 
   "cause.actions": "Ações realizadas pela causa",
-  "cause.give": "DOAR AGORA",
+  "cause.give": "CONTRIBUA AGORA",
 
   "causeRegister.title": "Cadastrar causa",
   "causeRegister.form.fieldRequired": "Campo obrigatório",
