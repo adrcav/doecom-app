@@ -1,17 +1,29 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { useState, useContext } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import Button from '../../components/Button';
 import CauseCard from '../../components/CauseCard';
+import ActionRequiresLogin from '../../components/ActionRequiresLogin';
 
 import { causes as dataCauses } from '../../util/data';
+import { AuthContext } from '../../services/auth';
 
 const Main = () => {
   const intl = useIntl();
+  const history = useHistory();
+  const auth = useContext(AuthContext);
   const causes = dataCauses;
+  const [showLoginOrRegister, setShowLoginOrRegister] = useState(false);
+
+  const handleAddCause = () => {
+    if (auth.isAuthenticated()) {
+      history.push(`/cause/new`);
+    }
+
+    setShowLoginOrRegister(true);
+  };
 
   return (
     <div className="container">
@@ -24,9 +36,9 @@ const Main = () => {
         <div className="col-6 d-flex justify-content-end">
           <Button
             theme="primary"
-            icon="FaLocationArrow"
-            value="Petrolina/PE"
-            onClick={() => toast.info(intl.formatMessage(messages.regionUnavailable))}
+            icon="FaPlus"
+            value={intl.formatMessage(messages.addYourCause)}
+            onClick={handleAddCause}
           />
         </div>
       </div>
@@ -48,6 +60,11 @@ const Main = () => {
         </div>
         ))}
       </div>
+
+      <ActionRequiresLogin
+        show={showLoginOrRegister}
+        onClose={() => setShowLoginOrRegister(!showLoginOrRegister)}
+      />
     </div>
   );
 };

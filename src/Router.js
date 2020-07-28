@@ -17,6 +17,7 @@ import RegisterSuccess from './components/RegisterSuccess';
 
 import Main from './containers/Main';
 import Cause from './containers/Cause';
+import CauseRegister from './containers/CauseRegister';
 import Give from './containers/Give';
 import Login from './containers/Login';
 import Register from './containers/Register';
@@ -66,6 +67,7 @@ const Router = () => {
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/register" component={Register} />
           <Route path="/account" component={Account} />
+          <Route path="/cause/new" component={CauseRegister} exact />
           <Route path="/cause/:id" component={Cause} />
           <Route path="/give/success" component={GiveSuccess} />
           <Route path="/give/:id" component={Give} />

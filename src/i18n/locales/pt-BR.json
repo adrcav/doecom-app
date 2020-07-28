@@ -49,9 +49,27 @@
   "registerSuccess.backButton": "Ir para página principal",
 
   "causes.suggestions": "Sugestões para você",
+  "causes.addYourCause": "Cadastre sua causa",
 
   "cause.actions": "Ações realizadas pela causa",
   "cause.give": "DOAR AGORA",
+
+  "causeRegister.title": "Cadastrar causa",
+  "causeRegister.form.fieldRequired": "Campo obrigatório",
+  "causeRegister.form.nameLabel": "Nome:",
+  "causeRegister.form.nameDescription": "Qual o nome da sua causa?",
+  "causeRegister.form.pictureLabel": "Foto principal:",
+  "causeRegister.form.pictureDescription": "Foto principal da sua causa",
+  "causeRegister.form.resumeLabel": "Descrição:",
+  "causeRegister.form.resumeDescription": "Descreva a causa voluntária",
+  "causeRegister.form.stateLabel": "Estado:",
+  "causeRegister.form.stateDescription": "UF",
+  "causeRegister.form.cityLabel": "Cidade:",
+  "causeRegister.form.cityDescription": "Cidade",
+  "causeRegister.form.urlDonationLabel": "Link de doação:",
+  "causeRegister.form.urlDonationDescription": "Informe o link para doação",
+  "causeRegister.form.buttonSubmit": "Cadastrar",
+
 
   "give.title": "Doação",
   "give.fieldRequired": "Campo obrigatório",
