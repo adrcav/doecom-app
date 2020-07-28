@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 import { colors } from '../theme';
+import { rotate } from '../keyframes';
 
 export const Container = styled.button`
   width: 100%;
@@ -12,6 +13,7 @@ export const Container = styled.button`
   align-items: center;
   border: 1.5px solid;
   transition: all .3s ease-in-out;
+  position: relative;
 
   font-size: 1rem;
   font-weight: 500;
@@ -107,6 +109,39 @@ export const Container = styled.button`
 
     &:focus {
       box-shadow: 0 0 0 0.2rem ${rgba(colors.action.danger.hover, 0.25)};
+    }
+  }
+
+  .Container__spinner {
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+
+    &:before {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin-top: -10px;
+      margin-left: -10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, .35);
+      border-top-color: white;
+      animation: ${rotate} .6s linear infinite;
+    }
+  }
+
+  &.Container--has-loading {
+    & > span {
+      visibility: hidden;
+    }
+
+    .Container__spinner {
+      visibility: visible;
+      opacity: 1;
     }
   }
 `;

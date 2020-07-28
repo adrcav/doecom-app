@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import useAxios from 'axios-hooks';
 import ReactGA from 'react-ga';
 import { margins } from './components/theme';
 
+import { AuthContext } from './services/auth';
 import { useStateValue } from './services/state';
 
 import Header from './components/Header';
@@ -26,13 +28,33 @@ import TermsOfUse from './containers/TermsOfUse';
 const { REACT_APP_GA_ID } = process.env;
 
 const Router = () => {
+  const auth = useContext(AuthContext);
   let loading = false;
-  const [{ account }] = useStateValue();
+  const [{ account }, dispatch] = useStateValue();
+  const [{ error }, loadAccount] = useAxios('/account', { manual: true });
 
   ReactGA.initialize(REACT_APP_GA_ID);
   ReactGA.pageview(window.location.pathname + window.location.search);
 
+  useEffect(() => {
+    const loadData = async () => {
+      const { data: dataAccount } = await loadAccount();
+      dispatch({
+        type: 'updateAccount',
+        value: dataAccount
+      });
+    };
+
+    if (auth.isAuthenticated()) {
+      loadData();
+    }
+  }, [loadAccount, dispatch, auth]);
+
   if (loading) return (<Loading />);
+
+  if (error) return (
+    <p>Error!</p>
+  );
 
   return (
     <BrowserRouter>

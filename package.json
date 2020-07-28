@@ -6,6 +6,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "axios-hooks": "^2.1.0",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
     "moment": "^2.27.0",
@@ -23,6 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:fake-api": "json-server -w -d 200 -p 5000 src/util/db.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

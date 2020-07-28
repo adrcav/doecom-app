@@ -78,7 +78,7 @@ const Header = ({ userInfo }) => {
                   </p>
                 )}
                 <img
-                  src={userInfo.avatar || '/no-avatar.png'}
+                  src={userInfo.picture || '/no-avatar.png'}
                   alt={userInfo.name || 'Sem avatar'}
                   onClick={handleMenuClick}
                 />

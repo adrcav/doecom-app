@@ -1,0 +1,11 @@
+{
+  "login": {},
+  "account": {
+    "_id": "hash-id-account-1",
+    "name": "José Firstman",
+    "email": "jose@doecom.netlify.app",
+    "picture": "https://i.imgur.com/5Tdyd1P.jpg",
+    "state": "PE",
+    "city": "Petrolina"
+  }
+}

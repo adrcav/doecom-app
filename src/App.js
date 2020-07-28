@@ -1,18 +1,26 @@
 import React from 'react';
+import { configure } from 'axios-hooks';
 
 import './App.css';
 
 import Router from './Router';
 import { Auth, AuthContext } from './services/auth';
 import { StateProvider, initialState, reducer } from './services/state';
+import Api from './services/api';
 
 import { userInfo } from './util/data';
 
 const auth = new Auth();
+const api = new Api(auth);
 
 if (auth.isAuthenticated()) {
   initialState.account = userInfo;
 }
+
+configure({
+  cache: false,
+  axios: api.axios
+});
 
 function App() {
   return (

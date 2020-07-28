@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import useAxios from 'axios-hooks';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -11,14 +12,17 @@ import Input from '../../components/Input';
 import FormButton from '../../components/FormButton';
 import Title from '../../components/Title';
 
-import { userInfo } from '../../util/data';
-
 export const Login = ({ location }) => {
   const intl = useIntl();
   const history = useHistory();
   const auth = useContext(AuthContext);
   const [, dispatch] = useStateValue();
   let redirectUrl = '';
+
+  const [{ loading }, login] = useAxios({
+    url: '/login',
+    method: 'POST'
+  }, { manual: true });
 
   if (location.state) {
     redirectUrl = location.state.redirectUrl || null;
@@ -30,18 +34,15 @@ export const Login = ({ location }) => {
     }
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const data = {
-      user: 'id-hash-account-1',
-      accessToken: 'token-example',
-      expiresIn: new Date().getTime(),
-      tokenType: 'Bearer'
-    };
+    const { data } = await login();
+    data['expiresIn'] = new Date().getTime();
+
     auth.setSession(data);
 
-    const dataAccount = userInfo;
+    const dataAccount = { _id: data.user };
     dispatch({
       type: 'updateAccount',
       value: dataAccount
@@ -87,6 +88,7 @@ export const Login = ({ location }) => {
               type="submit"
               theme="primary"
               value={intl.formatMessage(messages.buttonSubmit)}
+              loading={loading}
             />
           </form>
 

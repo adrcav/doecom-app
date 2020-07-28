@@ -8,15 +8,19 @@ const Button = ({
   theme = 'primary',
   value,
   disabled = false,
+  loading = false,
   onClick
 }) => (
   <Container
     type={type}
-    className={classNames('btn', theme)}
-    disabled={disabled}
+    className={classNames(`btn ${theme}`, {
+      'Container--has-loading': loading
+    })}
+    disabled={disabled || loading}
     onClick={onClick || null}
   >
-    {value}
+    <div className="Container__spinner"></div>
+    <span>{value}</span>
   </Container>
 );
 
