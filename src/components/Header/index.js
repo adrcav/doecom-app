@@ -16,6 +16,8 @@ import {
 
 import Menu from '../Menu';
 
+const { REACT_APP_AVATAR_URL } = process.env;
+
 const Header = ({ userInfo }) => {
   const intl = useIntl();
   const history = useHistory();
@@ -60,6 +62,13 @@ const Header = ({ userInfo }) => {
     setShowMenu(!showMenu);
   }
 
+  const getAccountAvatar = (user) => {
+    if (typeof user.picture === undefined)
+      return '/no-avatar.png';
+
+    return user.picture.length ? user.picture : `${REACT_APP_AVATAR_URL}/?name=${user.name}&size=128&background=14163d&color=FFFFFF&bold=true`;
+  };
+
   return (
     <>
       <Container>
@@ -85,7 +94,7 @@ const Header = ({ userInfo }) => {
                   </p>
                 )}
                 <img
-                  src={userInfo.picture || '/no-avatar.png'}
+                  src={getAccountAvatar(userInfo)}
                   alt={userInfo.name || 'Sem avatar'}
                   onClick={handleMenuClick}
                 />
