@@ -4,7 +4,11 @@ const messages = {
   menu: {
     causes: {
       id: 'menu.causes',
-      defaultMessage: 'Volunteer causes'
+      defaultMessage: 'Home'
+    },
+    myCauses: {
+      id: 'menu.myCauses',
+      defaultMessage: 'My causes'
     },
     settings: {
       id: 'menu.settings',

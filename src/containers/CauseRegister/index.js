@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 

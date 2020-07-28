@@ -25,9 +25,16 @@ const Header = ({ userInfo }) => {
   const menuList = [
     {
       title: intl.formatMessage(messages.menu.causes),
-      icon: 'FaBuilding',
+      icon: 'FaHome',
       url: '/',
       exact: true,
+    },
+    {
+      title: intl.formatMessage(messages.menu.myCauses),
+      icon: 'FaList',
+      url: '/my-causes',
+      exact: true,
+      private: true,
     },
     {
       title: intl.formatMessage(messages.menu.settings),

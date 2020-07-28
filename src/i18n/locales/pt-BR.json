@@ -7,9 +7,10 @@
   "app.actionRequiresLogin.login": "Entrar",
   "app.actionRequiresLogin.signUp": "Cadastrar-se",
 
-  "menu.causes": "Causas voluntárias",
+  "menu.causes": "Início",
+  "menu.myCauses": "Minhas causas",
   "menu.settings": "Configurações",
-  "menu.logout": "Sair da conta",
+  "menu.logout": "Sair",
   "menu.login": "Entrar",
   "menu.signUp": "Cadastrar-se",
 
