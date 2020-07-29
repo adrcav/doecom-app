@@ -20,6 +20,7 @@ export const causes = [
       avatar: 'https://i.imgur.com/rP3YFvP.jpg',
       name: 'Respira Vida',
     },
+    paymentUrl: 'https://www.google.com'
   },
   {
     _id: 'hash-id-cause-2',
@@ -42,6 +43,7 @@ export const causes = [
       avatar: 'https://i.imgur.com/aQBqfbI.jpg',
       name: 'Projeto Lixo Eletrônico',
     },
+    paymentUrl: 'https://www.google.com'
   },
   {
     _id: 'hash-id-cause-4',
@@ -64,6 +66,7 @@ export const causes = [
       avatar: 'https://i.imgur.com/UVefH6j.jpg',
       name: 'ONG Proteger',
     },
+    paymentUrl: 'https://www.google.com'
   },
   {
     _id: 'hash-id-cause-3',
@@ -86,6 +89,7 @@ export const causes = [
       avatar: 'https://i.imgur.com/pO0GVg0.jpg',
       name: 'Associação dos Produtores de Uva',
     },
+    paymentUrl: 'https://www.google.com'
   },
 ];
 

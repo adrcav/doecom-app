@@ -8,11 +8,11 @@ const messages = {
 
   title: {
     id: 'giveSuccess.title',
-    defaultMessage: 'Donation confirmed!'
+    defaultMessage: 'Donation started!'
   },
   description: {
     id: 'giveSuccess.description',
-    defaultMessage: 'Payment successfully confirmed! The amount will be sent directly to selected volunteer cause.'
+    defaultMessage: 'You have been successfully redirected to cause payment link! Continue to donation and share your experience.'
   },
   mainButton: {
     id: 'giveSuccess.mainButton',

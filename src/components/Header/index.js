@@ -63,7 +63,7 @@ const Header = ({ userInfo }) => {
   }
 
   const getAccountAvatar = (user) => {
-    if (typeof user.picture === undefined)
+    if (!user._id)
       return '/no-avatar.png';
 
     return user.picture.length ? user.picture : `${REACT_APP_AVATAR_URL}/?name=${user.name}&size=128&background=14163d&color=FFFFFF&bold=true`;

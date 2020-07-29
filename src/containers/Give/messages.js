@@ -11,6 +11,14 @@ const messages = {
     defaultMessage: 'Field required'
   },
 
+  emailLabel: {
+    id: 'give.emailLabel',
+    defaultMessage: 'Email:'
+  },
+  emailDescription: {
+    id: 'give.emailDescription',
+    defaultMessage: 'Type your email'
+  },
   amountLabel: {
     id: 'give.amountLabel',
     defaultMessage: 'Amount:'

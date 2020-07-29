@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { FaCalendarAlt, FaUser, FaPager } from 'react-icons/fa';
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -9,27 +9,17 @@ import { CauseImage, CauseTitleSection, CauseFeature } from './styles';
 import BackButton from '../../components/BackButton';
 import FormButton from '../../components/FormButton';
 import CauseInfo from '../../components/CauseInfo';
-import ActionRequiresLogin from '../../components/ActionRequiresLogin';
 
-import { AuthContext } from '../../services/auth';
 import { causes as dataCauses } from '../../util/data';
 
 const Cause = ({ match }) => {
   const intl = useIntl();
   const history = useHistory();
-  const auth = useContext(AuthContext);
   const { id } = match.params;
-  const [showLoginOrRegister, setShowLoginOrRegister] = useState(false);
 
   const cause = dataCauses.filter(cause => cause._id === id)[0] || null;
 
-  const handleDonate = () => {
-    if (auth.isAuthenticated()) {
-      history.push(`/give/${cause._id}`);
-    }
-
-    setShowLoginOrRegister(true);
-  };
+  const handleDonate = () => history.push(`/give/${cause._id}`);;
 
   return (
     <div className="container" style={{ marginBottom: '20px' }}>
@@ -96,11 +86,6 @@ const Cause = ({ match }) => {
           />
         </div>
       </div>
-
-      <ActionRequiresLogin
-        show={showLoginOrRegister}
-        onClose={() => setShowLoginOrRegister(!showLoginOrRegister)}
-      />
     </div>
   );
 };

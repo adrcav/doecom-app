@@ -74,17 +74,19 @@
 
   "give.title": "Doação",
   "give.fieldRequired": "Campo obrigatório",
+  "give.emailLabel": "E-mail:",
+  "give.emailDescription": "Informe o seu e-mail",
   "give.amountLabel": "Valor:",
   "give.amountDescription": "Informe o valor",
   "give.methodLabel": "Método de pagamento:",
   "give.methods.boleto": "Boleto",
   "give.methods.creditCard": "Cartão de crédito",
-  "give.infoMessage": "Ao continuar, você será redirecionado(a) à tela de pagamento para finalizar o pagamento.",
+  "give.infoMessage": "Ao continuar, você será redirecionado(a) à página de pagamento fornecida pela causa voluntária para finalizar sua doação.",
   "give.infoSecurity": "Não se preocupe! Este é um ambiente totalmente seguro.",
   "give.buttonSubmit": "Continuar",
 
-  "giveSuccess.title": "Doação confirmada!",
-  "giveSuccess.description": "O pagamento foi confirmado com sucesso e sua doação será enviada diretamente à causa voluntária selecionada.",
+  "giveSuccess.title": "Doação iniciada!",
+  "giveSuccess.description": "Você acabou de ser redirecionado com sucesso até a página de pagamento fornecida pela causa voluntária. Finalize a doação e nos conte como foi sua experiência!",
   "giveSuccess.mainButton": "Voltar à página principal",
   "giveSuccess.backButton": "Ir para página principal",
 
