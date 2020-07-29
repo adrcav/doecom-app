@@ -9,6 +9,12 @@ const messages = {
     id: 'cause.give',
     defaultMessage: 'GIVE NOW'
   },
+  alerts: {
+    notFound: {
+      id: 'cause.alerts.notFound',
+      defaultMessage: 'Cause not found!'
+    },
+  },
 };
 
 export default defineMessage(messages);

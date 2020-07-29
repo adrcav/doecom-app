@@ -15,6 +15,16 @@ const messages = {
     id: 'causes.addYourCause',
     defaultMessage: 'Add your cause'
   },
+
+  error: {
+    id: 'causes.error',
+    defaultMessage: 'Unable to find volunteer causes. Please try again later.'
+  },
+
+  empty: {
+    id: 'causes.empty',
+    defaultMessage: 'Sorry we could not find any volunteer causes.'
+  },
 };
 
 export default defineMessage(messages);

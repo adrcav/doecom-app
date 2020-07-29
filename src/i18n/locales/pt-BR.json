@@ -51,9 +51,12 @@
 
   "causes.suggestions": "Sugestões para você",
   "causes.addYourCause": "Cadastrar causa",
+  "causes.error": "Não foi possível buscar as causas voluntárias. Por favor, tente novamente mais tarde.",
+  "causes.empty": "Infelizmente não encontramos nenhuma causa para sua região.",
 
   "cause.actions": "Ações realizadas pela causa",
   "cause.give": "CONTRIBUA AGORA",
+  "cause.alerts.notFound": "Causa não encontrada!",
 
   "causeRegister.title": "Cadastrar causa",
   "causeRegister.form.fieldRequired": "Campo obrigatório",
@@ -70,7 +73,6 @@
   "causeRegister.form.urlDonationLabel": "Link de doação:",
   "causeRegister.form.urlDonationDescription": "Informe o link para doação",
   "causeRegister.form.buttonSubmit": "Cadastrar",
-
 
   "give.title": "Doação",
   "give.fieldRequired": "Campo obrigatório",

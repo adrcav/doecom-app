@@ -31,9 +31,8 @@ const { REACT_APP_GA_ID } = process.env;
 
 const Router = () => {
   const auth = useContext(AuthContext);
-  let loading = false;
   const [{ account }, dispatch] = useStateValue();
-  const [{ error }, loadAccount] = useAxios('/account', { manual: true });
+  const [{ loading, error }, loadAccount] = useAxios('/account', { manual: true });
 
   ReactGA.initialize(REACT_APP_GA_ID);
   ReactGA.pageview(window.location.pathname + window.location.search);
@@ -52,7 +51,13 @@ const Router = () => {
     }
   }, [loadAccount, dispatch, auth]);
 
-  if (loading) return (<Loading />);
+  const refetchAccount = async () => {
+    const { data: dataAccount } = await loadAccount();
+    dispatch({
+      type: 'updateAccount',
+      value: dataAccount
+    });
+  };
 
   if (error) return (
     <p>Error!</p>
@@ -60,14 +65,33 @@ const Router = () => {
 
   return (
     <BrowserRouter>
+      {loading && (
+        <Loading />
+      )}
       <Header userInfo={account} />
       <div style={{ marginTop: margins.header }}>
         <Switch>
           <Route path="/" component={Main} exact />
-          <Route path="/login" component={Login} />
+          <Route
+            path="/login"
+            render={(props) => (
+              <Login
+                {...props}
+                refetchParent={refetchAccount}
+              />
+            )}
+          />
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/register" component={Register} />
-          <Route path="/account" component={Account} />
+          <Route
+            path="/account"
+            render={(props) => (
+              <Account
+                {...props}
+                refetchParent={refetchAccount}
+              />
+            )}
+          />
           <Route path="/my-causes" component={MyCauses} />
           <Route path="/cause/new" component={CauseRegister} exact />
           <Route path="/cause/:id" component={Cause} />

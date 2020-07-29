@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:fake-api": "json-server -w -d 200 -p 5000 src/util/db.json",
+    "start:fake-api": "json-server -w -d 150 -p 5000 -i _id -r src/util/dbRoutes.json src/util/db.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

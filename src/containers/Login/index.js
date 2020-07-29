@@ -5,18 +5,16 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import { AuthContext } from '../../services/auth';
-import { useStateValue } from '../../services/state';
 
 import BackButton from '../../components/BackButton';
 import Input from '../../components/Input';
 import FormButton from '../../components/FormButton';
 import Title from '../../components/Title';
 
-export const Login = ({ location }) => {
+export const Login = ({ location, refetchParent }) => {
   const intl = useIntl();
   const history = useHistory();
   const auth = useContext(AuthContext);
-  const [, dispatch] = useStateValue();
   let redirectUrl = '';
 
   const [{ loading }, login] = useAxios({
@@ -39,15 +37,9 @@ export const Login = ({ location }) => {
 
     const { data } = await login();
     data['expiresIn'] = new Date().getTime();
-
     auth.setSession(data);
 
-    const dataAccount = { _id: data.user };
-    dispatch({
-      type: 'updateAccount',
-      value: dataAccount
-    });
-
+    await refetchParent();
     history.push(redirectUrl || '/');
   };
 
