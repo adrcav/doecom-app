@@ -7,6 +7,11 @@
   "app.actionRequiresLogin.login": "Entrar",
   "app.actionRequiresLogin.signUp": "Cadastrar-se",
 
+  "verify.verifyLoading": "Verificando conta...",
+  "verify.verified": "Conta verificada!",
+  "verify.errorOcurred": "Ocorreu um erro!",
+  "verify.loginButton": "Ir para o login",
+
   "menu.causes": "Início",
   "menu.myCauses": "Minhas causas",
   "menu.settings": "Configurações",
@@ -108,6 +113,26 @@
   "logout.description": "Tem certeza que deseja sair da sua conta na plataforma?",
   "logout.mainButton": "Sim, desejo sair",
 
+  "app.notifications.confirmEmail.title": "✉️ Verifique seu e-mail",
+  "app.notifications.confirmEmail.description": "Confirme que <strong>%ACCOUNT_EMAIL%</strong> é o seu endereço de e-mail para ativar sua conta.",
+  "app.notifications.confirmEmail.button": "Enviar e-mail novamente",
+  "app.notifications.confirmEmail.button.success": "E-mail de confirmação enviado novamente!",
+
   "app.alerts.regionUnavailable": "Somente a cidade de Petrolina/PE está disponível no momento.",
-  "app.alerts.account.updated": "Os dados da sua conta foram alterados com sucesso!"
+  "app.alerts.account.updated": "Os dados da sua conta foram alterados com sucesso!",
+
+  "app.errors.NOT_FOUND": "Desculpe, não foi possível encontrar esta informação!",
+  "app.errors.NOT_FOUND_OR_WRONG_PWD": "Usuário e/ou senha incorreto(s)!",
+  "app.errors.WRONG_AUTHORIZATION_TYPE": "Tipo de autorização incorreta!",
+  "app.errors.INVALID_AUTHORIZATION": "Autorização inválida!",
+  "app.errors.INVALID_USER": "Usuário inválido!",
+  "app.errors.ACCESS_DENIED": "Acesso negado!",
+  "app.errors.AUTHORIZATION_REQUIRED": "Esta operação requer uma autorização!",
+  "app.errors.SESSION_EXPIRED": "Sessão expirada!",
+  "app.errors.UNKNOWN_ERROR": "Ops, tivemos um problema! Por favor, tente novamente em breve.",
+  "app.errors.DUPLICATE_ITEM": "Item já existente!",
+  "app.errors.IMAGE_VERY_LARGE": "Tamanho da imagem deve ser menor que 2mb.",
+  "app.errors.INVALID_REQUEST": "Requisição inválida!",
+  "app.errors.INVALID_VERIFICATION_CODE": "Código de verificação de conta inválido!",
+  "app.errors.INVALID_RESET_PASSWORD_CODE": "Token de recuperação de senha inválido!"
 }

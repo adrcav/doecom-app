@@ -9,7 +9,7 @@ const Button = ({
   theme = 'primary',
   icon = null,
   value,
-  disabled = false ,
+  disabled = false,
   onClick
 }) => {
   const Icon = FontAwesome[icon] || FontAwesome['FaExternalLinkSquareAlt'];

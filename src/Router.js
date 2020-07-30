@@ -2,15 +2,19 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import useAxios from 'axios-hooks';
 import ReactGA from 'react-ga';
-import { margins } from './components/theme';
+import { toast } from 'react-toastify';
+import { useIntl } from 'react-intl';
+import messages from './messages';
 
 import { AuthContext } from './services/auth';
 import { useStateValue } from './services/state';
+import { errorMessage } from './services/errors';
 
+import { margins } from './components/theme';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
-// import { errorMessage } from './services/errors';
+import HeaderNotification from './components/HeaderNotification';
 
 import GiveSuccess from './components/GiveSuccess';
 import RegisterSuccess from './components/RegisterSuccess';
@@ -22,6 +26,7 @@ import CauseRegister from './containers/CauseRegister';
 import Give from './containers/Give';
 import Login from './containers/Login';
 import Register from './containers/Register';
+import Verify from './containers/Verify';
 import Account from './containers/Account';
 import Logout from './containers/Logout';
 import PrivacyPolicy from './containers/PrivacyPolicy';
@@ -30,9 +35,16 @@ import TermsOfUse from './containers/TermsOfUse';
 const { REACT_APP_GA_ID } = process.env;
 
 const Router = () => {
+  const intl = useIntl();
   const auth = useContext(AuthContext);
   const [{ account }, dispatch] = useStateValue();
+
   const [{ loading, error }, loadAccount] = useAxios('/account', { manual: true });
+
+  const [{ loading: loadingResendVerification }, resendVerification] = useAxios({
+    method: 'POST',
+    url: '/account/verify/request'
+  }, { manual: true });
 
   ReactGA.initialize(REACT_APP_GA_ID);
   ReactGA.pageview(window.location.pathname + window.location.search);
@@ -59,6 +71,16 @@ const Router = () => {
     });
   };
 
+  const handleResendVerification = async () => {
+    try {
+      const { data } = await resendVerification();
+      if (data && data.error) throw data.error;
+      toast.success(intl.formatMessage(messages.notifications.confirmEmail.success));
+    } catch (error) {
+      toast.error(intl.formatMessage(errorMessage(error.code)));
+    }
+  };
+
   if (error) return (
     <p>Error!</p>
   );
@@ -70,6 +92,21 @@ const Router = () => {
       )}
       <Header userInfo={account} />
       <div style={{ marginTop: margins.header }}>
+        {account && !account.verified && (
+          <div className="container">
+            <HeaderNotification
+              type="alert"
+              title={intl.formatMessage(messages.notifications.confirmEmail.title)}
+              description={intl.formatMessage(messages.notifications.confirmEmail.description).replace('%ACCOUNT_EMAIL%', account.email)}
+              buttonText={intl.formatMessage(messages.notifications.confirmEmail.button)}
+              buttonIcon="FaEnvelope"
+              buttonTheme="primary-outline"
+              buttonOnClick={handleResendVerification}
+              buttonLoading={loadingResendVerification}
+            />
+          </div>
+        )}
+
         <Switch>
           <Route path="/" component={Main} exact />
           <Route
@@ -83,6 +120,16 @@ const Router = () => {
           />
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/register" component={Register} />
+          <Route
+            path="/verify-account"
+            exact
+            render={(props) => (
+              <Verify
+                {...props}
+                refetchParent={refetchAccount}
+              />
+            )}
+          />
           <Route
             path="/account"
             render={(props) => (

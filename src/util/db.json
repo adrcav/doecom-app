@@ -106,5 +106,17 @@
       "paymentUrl": "https://www.google.com",
       "createdAt": "2020-07-28T22:28:43-03:00"
     }
+  ],
+  "verify": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNWYxMGVmMWY1YzI1ODAxNmZhNWYxNGFhIiwiaWF0IjoxNTk0OTQ1MzExLCJleHAiOjE1OTUwMzE3MTF9.DdzF-uWGL3U0K9KzNmbCfK_BKkZ805gDOjFvNh94MYE",
+      "_id": 1
+    },
+    {
+      "_id": 2
+    },
+    {
+      "_id": 3
+    }
   ]
 }

@@ -1,4 +1,6 @@
 {
   "/*": "/$1",
-  "/my-causes": "/causes"
+  "/my-causes": "/causes",
+  "/account/verify": "/verify",
+  "/account/verify/request": "/verify"
 }
