@@ -25,6 +25,8 @@ import Cause from './containers/Cause';
 import CauseRegister from './containers/CauseRegister';
 import Give from './containers/Give';
 import Login from './containers/Login';
+import RecoverPassword from './containers/RecoverPassword';
+import ResetPassword from './containers/ResetPassword';
 import Register from './containers/Register';
 import Verify from './containers/Verify';
 import Account from './containers/Account';
@@ -92,7 +94,7 @@ const Router = () => {
       )}
       <Header userInfo={account} />
       <div style={{ marginTop: margins.header }}>
-        {account && !account.verified && (
+        {account._id && !account.verified && (
           <div className="container">
             <HeaderNotification
               type="alert"
@@ -118,6 +120,8 @@ const Router = () => {
               />
             )}
           />
+          <Route path="/recover-password" component={RecoverPassword} />
+          <Route path="/reset-password" component={ResetPassword} />
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/register" component={Register} />
           <Route

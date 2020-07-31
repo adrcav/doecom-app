@@ -7,6 +7,7 @@ import messages from './messages';
 import { AuthContext } from '../../services/auth';
 
 import BackButton from '../../components/BackButton';
+import Label from '../../components/Label';
 import Input from '../../components/Input';
 import FormButton from '../../components/FormButton';
 import Title from '../../components/Title';
@@ -65,8 +66,14 @@ export const Login = ({ location, refetchParent }) => {
             </div>
 
             <div className="form-group">
+              <div className="d-flex justify-content-between">
+                <Label value={intl.formatMessage(messages.passwordLabel)} />
+                <NavLink to="/recover-password" style={{ fontSize: '.9rem', fontWeight: 500, marginLeft: '3px' }}>
+                  <FormattedMessage {...messages.forgotPassword} />
+                </NavLink>
+              </div>
+
               <Input
-                label={intl.formatMessage(messages.passwordLabel)}
                 type="password"
                 name="password"
                 icon="FaLock"

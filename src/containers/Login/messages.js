@@ -27,6 +27,11 @@ const messages = {
     defaultMessage: 'Continue'
   },
 
+  forgotPassword: {
+    id: 'login.forgotPassword',
+    defaultMessage: 'Forgot your password?'
+  },
+
   noAccount: {
     question: {
       id: 'login.noAccount.question',
