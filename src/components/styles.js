@@ -14,3 +14,8 @@ export const LoadingSpinner = styled.div`
   border-top-color: ${rgba(colors.action.primary.default, 0.15)};
   animation: ${rotate} .6s linear infinite;
 `;
+
+export const InputError = styled.span`
+  color: ${colors.action.danger.default};
+  font-size: .9rem;
+`;

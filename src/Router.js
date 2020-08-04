@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import useAxios from 'axios-hooks';
-import ReactGA from 'react-ga';
 import { toast } from 'react-toastify';
 import { useIntl } from 'react-intl';
 import messages from './messages';
@@ -22,7 +21,8 @@ import RegisterSuccess from './components/RegisterSuccess';
 import Main from './containers/Main';
 import MyCauses from './containers/MyCauses';
 import Cause from './containers/Cause';
-import CauseRegister from './containers/CauseRegister';
+import MyCause from './containers/MyCause';
+import MyCauseEdit from './containers/MyCause/Edit';
 import Give from './containers/Give';
 import Login from './containers/Login';
 import RecoverPassword from './containers/RecoverPassword';
@@ -33,8 +33,6 @@ import Account from './containers/Account';
 import Logout from './containers/Logout';
 import PrivacyPolicy from './containers/PrivacyPolicy';
 import TermsOfUse from './containers/TermsOfUse';
-
-const { REACT_APP_GA_ID } = process.env;
 
 const Router = () => {
   const intl = useIntl();
@@ -47,9 +45,6 @@ const Router = () => {
     method: 'POST',
     url: '/account/verify/request'
   }, { manual: true });
-
-  ReactGA.initialize(REACT_APP_GA_ID);
-  ReactGA.pageview(window.location.pathname + window.location.search);
 
   useEffect(() => {
     const loadData = async () => {
@@ -144,7 +139,8 @@ const Router = () => {
             )}
           />
           <Route path="/my-causes" component={MyCauses} />
-          <Route path="/cause/new" component={CauseRegister} exact />
+          <Route path="/cause/new" component={MyCause} exact />
+          <Route path="/cause/:id/edit" component={MyCauseEdit} exact />
           <Route path="/cause/:id" component={Cause} />
           <Route path="/give/success" component={GiveSuccess} />
           <Route path="/give/:id" component={Give} />

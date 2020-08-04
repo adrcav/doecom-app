@@ -1,16 +1,26 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { InputGroup, Container } from './styles';
 import Label from '../Label';
 
-const Select = (props) => {
+const Select = React.forwardRef((props, ref) => {
   return (
     <div className="d-flex flex-column-reverse">
-      <InputGroup>
-        <Container {...props}>
+      <InputGroup className={classNames({ 'input--error': props.error })}>
+        <Container
+          {...props}
+          className={classNames({ 'input--error': props.error })}
+          ref={ref}
+        >
           <option value="">{props.placeholderValue || 'Selecione'}</option>
           {props.options.map(option => (
-            <option key={option.value} value={option.value}>{option.text}</option>
+            <option
+              key={option.value}
+              value={option.value}
+            >
+              {option.text}
+            </option>
           ))}
         </Container>
       </InputGroup>
@@ -19,6 +29,6 @@ const Select = (props) => {
       )}
     </div>
   );
-};
+});
 
 export default Select;

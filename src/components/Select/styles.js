@@ -13,6 +13,12 @@ export const InputGroup = styled.div`
       color: ${colors.action.primary.default};
     }
   }
+
+  &.input--error {
+    & + label {
+      color: ${colors.action.danger.default};
+    }
+  }
 `;
 
 export const Container = styled.select`
@@ -39,5 +45,9 @@ export const Container = styled.select`
     & + label {
       color: ${colors.action.primary.default};
     }
+  }
+
+  &.input--error {
+    border-color: ${colors.action.danger.default};
   }
 `;

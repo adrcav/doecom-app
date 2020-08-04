@@ -19,6 +19,10 @@ const messages = {
     id: 'give.emailDescription',
     defaultMessage: 'Type your email'
   },
+  emailIsRequired: {
+    id: 'give.emailIsRequired',
+    defaultMessage: 'Email is required'
+  },
   amountLabel: {
     id: 'give.amountLabel',
     defaultMessage: 'Amount:'
@@ -27,9 +31,17 @@ const messages = {
     id: 'give.amountDescription',
     defaultMessage: 'Type a amount'
   },
+  amountIsRequired: {
+    id: 'give.amountIsRequired',
+    defaultMessage: 'Amount is required'
+  },
   methodLabel: {
     id: 'give.methodLabel',
     defaultMessage: 'Payment method:',
+  },
+  methodIsRequired: {
+    id: 'give.methodIsRequired',
+    defaultMessage: 'Payment Method is required'
   },
 
   methods: {

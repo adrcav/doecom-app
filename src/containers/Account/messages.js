@@ -19,6 +19,10 @@ const messages = {
     id: 'account.nameDescription',
     defaultMessage: 'Type your full name'
   },
+  nameIsRequired: {
+    id: 'account.nameIsRequired',
+    defaultMessage: 'Name is required'
+  },
   emailLabel: {
     id: 'account.emailLabel',
     defaultMessage: 'Email:'
@@ -26,6 +30,10 @@ const messages = {
   emailDescription: {
     id: 'account.emailDescription',
     defaultMessage: 'Type your email'
+  },
+  emailIsRequired: {
+    id: 'account.emailIsRequired',
+    defaultMessage: 'Email is required'
   },
   stateLabel: {
     id: 'account.stateLabel',
@@ -35,6 +43,10 @@ const messages = {
     id: 'account.stateDescription',
     defaultMessage: 'Select'
   },
+  stateIsRequired: {
+    id: 'account.stateIsRequired',
+    defaultMessage: 'State is required'
+  },
   cityLabel: {
     id: 'account.cityLabel',
     defaultMessage: 'City:'
@@ -42,6 +54,26 @@ const messages = {
   cityDescription: {
     id: 'account.cityDescription',
     defaultMessage: 'Your city'
+  },
+  cityIsRequired: {
+    id: 'account.cityIsRequired',
+    defaultMessage: 'City is required'
+  },
+  passwordLabel: {
+    id: 'account.passwordLabel',
+    defaultMessage: 'Update password:'
+  },
+  confirmPasswordLabel: {
+    id: 'account.confirmPasswordLabel',
+    defaultMessage: 'Confirm password:'
+  },
+  passwordIsRequired: {
+    id: 'account.passwordIsRequired',
+    defaultMessage: 'Password is required'
+  },
+  passwordsDontMatch: {
+    id: 'account.passwordsDontMatch',
+    defaultMessage: 'Password don\'t match'
   },
   buttonSubmit: {
     id: 'account.buttonSubmit',

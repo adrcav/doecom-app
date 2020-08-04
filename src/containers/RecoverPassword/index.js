@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAxios from 'axios-hooks';
+import { useForm } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import { AuthContext } from '../../services/auth';
 import { errorMessage } from '../../services/errors';
 
+import { InputError } from '../../components/styles';
 import BackButton from '../../components/BackButton';
 import Input from '../../components/Input';
 import FormButton from '../../components/FormButton';
@@ -17,6 +19,7 @@ export const RecoverPassword = ({ location, refetchParent }) => {
   const intl = useIntl();
   const history = useHistory();
   const auth = useContext(AuthContext);
+  const { register, handleSubmit, errors } = useForm();
 
   const [{ loading }, request] = useAxios({
     url: '/account/reset-password/request',
@@ -52,7 +55,7 @@ export const RecoverPassword = ({ location, refetchParent }) => {
 
       <div className="row justify-content-center">
         <div className="col-lg-6">
-          <form onSubmit={handleRecover}>
+          <form onSubmit={handleSubmit(handleRecover)}>
             <div className="form-group">
               <Input
                 label={intl.formatMessage(messages.emailLabel)}
@@ -61,8 +64,14 @@ export const RecoverPassword = ({ location, refetchParent }) => {
                 icon="FaRegEnvelope"
                 className="form-control"
                 placeholder={intl.formatMessage(messages.emailDescription)}
-                required={true}
+                ref={register({ required: true })}
+                error={errors.email}
               />
+              {errors.email && (
+                <InputError>
+                  <FormattedMessage {...messages.emailIsRequired} />
+                </InputError>
+              )}
             </div>
 
             <FormButton

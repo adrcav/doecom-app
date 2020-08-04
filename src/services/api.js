@@ -22,4 +22,14 @@ export default class Api {
     return this;
   }
 
+  uploadImage(image) {
+    const formData = new FormData();
+    formData.append('image', image);
+    return this.axios.put(
+      '/image',
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    );
+  }
+
 };

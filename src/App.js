@@ -7,15 +7,12 @@ import Router from './Router';
 import { Auth, AuthContext } from './services/auth';
 import { StateProvider, initialState, reducer } from './services/state';
 import Api from './services/api';
-
-import { userInfo } from './util/data';
+import { setup } from './services/beacon';
 
 const auth = new Auth();
 const api = new Api(auth);
 
-if (auth.isAuthenticated()) {
-  initialState.account = userInfo;
-}
+setup();
 
 configure({
   cache: false,

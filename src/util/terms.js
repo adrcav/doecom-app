@@ -1,6 +1,6 @@
 export const privacyPolicy = `
   <p>A sua privacidade é importante para nós. É política do Doecom respeitar a sua privacidade em relação a qualquer
-      informação sua que possamos coletar no site <a href=https://doecom.netlify.app />Doecom</a>, e outros sites que
+      informação sua que possamos coletar no site <a href=https://doecom.org />Doecom</a>, e outros sites que
       possuímos e operamos.</p>
   <p>Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por
       meios justos e legais, com o seu conhecimento e consentimento. Também informamos porquê estamos coletando e como
@@ -94,12 +94,12 @@ export const privacyPolicy = `
 `;
 
 export const termsOfUse = `
-  <p>Este Termo de Uso apresenta as “Condições Gerais” aplicáveis ao uso dos serviços oferecidos por DOECOM DOAÇÕES, pessoa jurídica fictícia, doravante denominada Doecom, através do site www.doecom.netlify.app.</p>
+  <p>Este Termo de Uso apresenta as “Condições Gerais” aplicáveis ao uso dos serviços oferecidos por DOECOM DOAÇÕES, pessoa jurídica fictícia, doravante denominada Doecom, através do site www.doecom.org.</p>
   <p>Qualquer pessoa, doravante denominada “PARTICIPANTE”, que pretenda utilizar qualquer serviço ou informação do Doecom deverá aceitar este Termo de Uso, e todas as demais políticas incorporados ao mesmo por referência e princípios que o regem.</p>
   <p>A ACEITAÇÃO DO TERMO DE USO É ABSOLUTAMENTE INDISPENSÁVEL À UTILIZAÇÃO DA PLATAFORMA E SEUS SERVIÇOS, SEJA COMO ASINANTE OU NÃO ASSINANTE.</p>
 
   <h2>1. Termos</h2>
-  <p>Ao acessar ao site <a href='https://doecom.netlify.app/'>Doecom</a>, concorda em cumprir estes termos de serviço,
+  <p>Ao acessar ao site <a href='https://doecom.org/'>Doecom</a>, concorda em cumprir estes termos de serviço,
       todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de todas as leis locais
       aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais
       contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis.</p>

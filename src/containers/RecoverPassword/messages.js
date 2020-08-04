@@ -14,6 +14,10 @@ const messages = {
     id: 'recoverPassword.emailDescription',
     defaultMessage: 'Type your email'
   },
+  emailIsRequired: {
+    id: 'recoverPassword.emailIsRequired',
+    defaultMessage: 'Email is required'
+  },
   buttonSubmit: {
     id: 'recoverPassword.buttonSubmit',
     defaultMessage: 'Continue'

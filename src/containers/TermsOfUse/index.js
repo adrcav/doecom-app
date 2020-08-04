@@ -6,7 +6,6 @@ import { TermsContainer } from './styles';
 
 import BackButton from '../../components/BackButton';
 import Title from '../../components/Title';
-import PrototypeAlert from '../../components/PrototypeAlert';
 
 import { termsOfUse } from '../../util/terms';
 
@@ -18,8 +17,6 @@ export const TermsOfUse = () => {
       <BackButton />
 
       <Title value={intl.formatMessage(messages.title)} />
-
-      <PrototypeAlert />
 
       <TermsContainer
         dangerouslySetInnerHTML={{ __html: termsOfUse }}

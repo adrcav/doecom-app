@@ -6,7 +6,7 @@ import CurrencyInput from 'react-currency-masked-input';
 import { InputGroup } from './styles';
 import Label from '../Label';
 
-const Input = (props) => {
+const Input = React.forwardRef((props, ref) => {
   let Icon;
 
   if (props.icon) {
@@ -16,13 +16,15 @@ const Input = (props) => {
   return (
     <div className="d-flex flex-column-reverse">
       <InputGroup className={classNames({
-        'has-icon': props.icon
+        'has-icon': props.icon,
+        'input--error': props.error
       })}>
-        {(!props.maskType && (
-          <input {...props} />
-        ))}
-        {props.maskType === 'currency' && (
+        {props.maskType === 'currency' ? (
           <CurrencyInput separator="," {...props} />
+        ) : props.type === 'textarea' ? (
+          <textarea {...props} ref={ref} />
+        ) : (
+          <input {...props} ref={ref} />
         )}
 
         {props.icon && (
@@ -36,6 +38,6 @@ const Input = (props) => {
       )}
     </div>
   );
-};
+});
 
 export default Input;

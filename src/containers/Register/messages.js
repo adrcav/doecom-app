@@ -12,7 +12,7 @@ const messages = {
     },
     buttonSubmit: {
       id: 'register.terms.buttonSubmit',
-      defaultMessage: 'Continue'
+      defaultMessage: 'Agree and continue'
     },
   },
 
@@ -33,6 +33,10 @@ const messages = {
       id: 'register.form.nameDescription',
       defaultMessage: 'Type your full name'
     },
+    nameIsRequired: {
+      id: 'register.form.nameIsRequired',
+      defaultMessage: 'Name is required'
+    },
     emailLabel: {
       id: 'register.form.emailLabel',
       defaultMessage: 'Email:'
@@ -40,6 +44,10 @@ const messages = {
     emailDescription: {
       id: 'register.form.emailDescription',
       defaultMessage: 'Type your email'
+    },
+    emailIsRequired: {
+      id: 'register.form.emailIsRequired',
+      defaultMessage: 'Email is required'
     },
     stateLabel: {
       id: 'register.form.stateLabel',
@@ -49,6 +57,10 @@ const messages = {
       id: 'register.form.stateDescription',
       defaultMessage: 'Select'
     },
+    stateIsRequired: {
+      id: 'register.form.stateIsRequired',
+      defaultMessage: 'State is required'
+    },
     cityLabel: {
       id: 'register.form.cityLabel',
       defaultMessage: 'City:'
@@ -57,6 +69,10 @@ const messages = {
       id: 'register.form.cityDescription',
       defaultMessage: 'Your city'
     },
+    cityIsRequired: {
+      id: 'register.form.cityIsRequired',
+      defaultMessage: 'City is required'
+    },
     passwordLabel: {
       id: 'register.form.passwordLabel',
       defaultMessage: 'Password:'
@@ -64,6 +80,22 @@ const messages = {
     passwordDescription: {
       id: 'register.form.passwordDescription',
       defaultMessage: 'Type your password'
+    },
+    confirmPasswordLabel: {
+      id: 'register.form.confirmPasswordLabel',
+      defaultMessage: 'Confirm password:'
+    },
+    confirmPasswordDescription: {
+      id: 'register.form.confirmPasswordDescription',
+      defaultMessage: 'Confirm your password'
+    },
+    passwordIsRequired: {
+      id: 'register.form.passwordIsRequired',
+      defaultMessage: 'Password is required'
+    },
+    passwordsDontMatch: {
+      id: 'register.form.passwordsDontMatch',
+      defaultMessage: 'Password don\'t match'
     },
     buttonSubmit: {
       id: 'register.form.buttonSubmit',

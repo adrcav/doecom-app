@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import useAxios from 'axios-hooks';
+import { toast } from 'react-toastify';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import { AuthContext } from '../../services/auth';
+import { errorMessage } from '../../services/errors';
 
+import { InputError } from '../../components/styles';
 import BackButton from '../../components/BackButton';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
@@ -18,7 +23,13 @@ export const Register = () => {
   const intl = useIntl();
   const history = useHistory();
   const auth = useContext(AuthContext);
+  const { register, watch, handleSubmit, errors } = useForm();
   const [agreedTerms, setAgreedTerms] = useState(false);
+
+  const [{ loading }, registerAccount] = useAxios({
+    url: '/account/register',
+    method: 'POST'
+  }, { manual: true });
 
   const states = dataStates.map(state => ({ value: state.uf, text: state.name }));
 
@@ -28,10 +39,14 @@ export const Register = () => {
     }
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    history.push('/register/success');
+  const handleRegister = async (values) => {
+    try {
+      const { data } = await registerAccount({ data: values });
+      if (data && data.error) throw data.error;
+      history.push('/register/success');
+    } catch (error) {
+      toast.error(intl.formatMessage(errorMessage(error.code)));
+    }
   };
 
   const agreeTerms = () => {
@@ -55,7 +70,7 @@ export const Register = () => {
 
       <div className="row justify-content-center">
         <div className="col-lg-6">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(handleRegister)}>
             <div className="form-group">
               <Input
                 label={`${intl.formatMessage(messages.form.nameLabel)} *`}
@@ -63,8 +78,14 @@ export const Register = () => {
                 name="name"
                 className="form-control"
                 placeholder={intl.formatMessage(messages.form.nameDescription)}
-                required={true}
+                ref={register({ required: true })}
+                error={errors.name}
               />
+              {errors.name && (
+                <InputError>
+                  <FormattedMessage {...messages.form.nameIsRequired} />
+                </InputError>
+              )}
             </div>
 
             <div className="form-group">
@@ -74,8 +95,14 @@ export const Register = () => {
                 name="email"
                 className="form-control"
                 placeholder={intl.formatMessage(messages.form.emailDescription)}
-                required={true}
+                ref={register({ required: true })}
+                error={errors.email}
               />
+              {errors.email && (
+                <InputError>
+                  <FormattedMessage {...messages.form.emailIsRequired} />
+                </InputError>
+              )}
             </div>
 
             <div className="row">
@@ -87,8 +114,14 @@ export const Register = () => {
                     className="form-control"
                     placeholderValue={intl.formatMessage(messages.form.stateDescription)}
                     options={states}
-                    required={true}
+                    ref={register({ required: true })}
+                    error={errors.state}
                   />
+                  {errors.state && (
+                    <InputError>
+                      <FormattedMessage {...messages.form.stateIsRequired} />
+                    </InputError>
+                  )}
                 </div>
               </div>
               <div className="col-7">
@@ -99,8 +132,14 @@ export const Register = () => {
                     name="city"
                     className="form-control"
                     placeholder={intl.formatMessage(messages.form.cityDescription)}
-                    required={true}
+                    ref={register({ required: true })}
+                    error={errors.city}
                   />
+                  {errors.city && (
+                    <InputError>
+                      <FormattedMessage {...messages.form.cityIsRequired} />
+                    </InputError>
+                  )}
                 </div>
               </div>
             </div>
@@ -112,14 +151,51 @@ export const Register = () => {
                 name="password"
                 className="form-control"
                 placeholder={intl.formatMessage(messages.form.passwordDescription)}
-                required={true}
+                ref={register({ required: true })}
+                error={errors.password || errors.confirmPassword?.type === 'validate' ? errors.confirmPassword : ''}
               />
+              {errors.password?.type === 'required' && (
+                <InputError>
+                  <FormattedMessage {...messages.form.passwordIsRequired} />
+                </InputError>
+              )}
+              {errors.confirmPassword?.type === 'validate' && (
+                <InputError>
+                  <FormattedMessage {...messages.form.passwordsDontMatch} />
+                </InputError>
+              )}
+            </div>
+
+            <div className="form-group">
+              <Input
+                label={`${intl.formatMessage(messages.form.confirmPasswordLabel)} *`}
+                type="password"
+                name="confirmPassword"
+                className="form-control"
+                placeholder={intl.formatMessage(messages.form.confirmPasswordDescription)}
+                ref={register({
+                  required: true,
+                  validate: (value) => value === watch('password') || 'Passwords don\'t match'
+                })}
+                error={errors.confirmPassword}
+              />
+              {errors.password?.type === 'required' && (
+                <InputError>
+                  <FormattedMessage {...messages.form.passwordIsRequired} />
+                </InputError>
+              )}
+              {errors.confirmPassword?.type === 'validate' && (
+                <InputError>
+                  <FormattedMessage {...messages.form.passwordsDontMatch} />
+                </InputError>
+              )}
             </div>
 
             <FormButton
               type="submit"
               theme="primary"
               value={intl.formatMessage(messages.form.buttonSubmit)}
+              loading={loading}
             />
           </form>
         </div>

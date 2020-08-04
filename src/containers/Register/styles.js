@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const TermsCard = styled.div`
   width: 100%;
-  max-height: 150px;
+  max-height: 200px;
   padding: 20px;
   background-color: white;
   border-radius: 7px;

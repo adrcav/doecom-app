@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as FontAwesome from 'react-icons/fa';
 import useAxios from 'axios-hooks';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import { SafeAlert } from './styles';
 
+import { LoadingSpinner, InputError } from '../../components/styles';
 import BackButton from '../../components/BackButton';
 import CauseInfo from '../../components/CauseInfo';
 import Input from '../../components/Input';
@@ -17,20 +19,24 @@ import FormRadioCard from '../../components/FormRadioCard';
 import Title from '../../components/Title';
 
 import { AuthContext } from '../../services/auth';
-import { causes as dataCauses } from '../../util/data';
+import { errorMessage } from '../../services/errors';
 
 const Give = ({ match }) => {
   const intl = useIntl();
   const { id } = match.params;
   const history = useHistory();
   const auth = useContext(AuthContext);
+  const { register, handleSubmit, errors } = useForm();
 
   const [{ loading }, giveAmount] = useAxios({
-    url: `/give`,
+    url: `/causes/${id}/donation`,
     method: 'POST'
   }, { manual: true });
 
-  const cause = dataCauses.filter(cause => cause._id === id)[0] || null;
+  const [{ loading: loadingCause, data: cause }] = useAxios({
+    url: `/causes/${id}`
+  });
+
   const paymentMethods = [
     {
       text: intl.formatMessage(messages.methods.boleto),
@@ -44,16 +50,14 @@ const Give = ({ match }) => {
     },
   ];
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleGive = async (values) => {
     try {
-      const { data } = await giveAmount();
+      const { data } = await giveAmount({ data: values });
       if (data.error) throw data.error.code;
       handleDonationClick(cause.paymentUrl);
       history.push('/give/success');
     } catch (error) {
-      toast.error('Não foi possível continuar com sua doação. Por favor, tente novamente.');
+      toast.error(intl.formatMessage(errorMessage(error)));
     }
   };
 
@@ -70,92 +74,125 @@ const Give = ({ match }) => {
 
       <Title value={intl.formatMessage(messages.title)} />
 
-      <CauseInfo data={cause} />
+      {loadingCause && (
+        <div className="row justify-content-center">
+          <LoadingSpinner />
+        </div>
+      )}
 
-      <p style={{
-        textAlign: 'right',
-        color: '#999',
-        fontStyle: 'italic',
-        fontSize: '.9rem',
-        margin: 0
-      }}>(*) <FormattedMessage {...messages.fieldRequired} /></p>
+      {cause && (
+        <div className="row">
+          <div className="col-12">
+            <CauseInfo data={cause} />
 
-      <div className="row">
-        <div className="col-lg-6">
-          <form onSubmit={handleSubmit}>
-            {!auth.isAuthenticated() && (
+            <p style={{
+              textAlign: 'right',
+              color: '#999',
+              fontStyle: 'italic',
+              fontSize: '.9rem',
+              margin: 0
+            }}>(*) <FormattedMessage {...messages.fieldRequired} /></p>
+          </div>
+
+          <div className="col-lg-6">
+            <form onSubmit={handleSubmit(handleGive)}>
+              {!auth.isAuthenticated() && (
+                <div className="form-group">
+                  <Input
+                  label={`${intl.formatMessage(messages.emailLabel)} *`}
+                    type="email"
+                    name="email"
+                    icon="FaEnvelope"
+                    className="form-control"
+                    placeholder={intl.formatMessage(messages.emailDescription)}
+                    ref={register({ required: !auth.isAuthenticated() })}
+                    error={errors.email}
+                  />
+                  {errors.email && (
+                    <InputError>
+                      <FormattedMessage {...messages.emailIsRequired} />
+                    </InputError>
+                  )}
+                </div>
+              )}
+
               <div className="form-group">
                 <Input
-                label={`${intl.formatMessage(messages.emailLabel)} *`}
-                  type="email"
-                  name="email"
-                  icon="FaEnvelope"
+                  label={`${intl.formatMessage(messages.amountLabel)} *`}
+                  type="tel"
+                  inputMode="number"
+                  name="amount"
+                  icon="FaDollarSign"
                   className="form-control"
-                  placeholder={intl.formatMessage(messages.emailDescription)}
-                  required={true}
+                  placeholder={intl.formatMessage(messages.amountDescription)}
+                  /*maskType="currency"
+                  pattern="*"*/
+                  ref={register({ required: true })}
+                  error={errors.amount}
                 />
+                {errors.amount && (
+                  <InputError>
+                    <FormattedMessage {...messages.amountIsRequired} />
+                  </InputError>
+                )}
               </div>
-            )}
 
-            <div className="form-group">
-              <Input
-                label={`${intl.formatMessage(messages.amountLabel)} *`}
-                type="tel"
-                name="value"
-                icon="FaDollarSign"
-                className="form-control"
-                placeholder={intl.formatMessage(messages.amountDescription)}
-                maskType="currency"
-                pattern="*"
-                required={true}
-              />
-            </div>
-
-            <div className="row">
-              <div className="col-12">
-                <Label value={`${intl.formatMessage(messages.methodLabel)} *`} />
-              </div>
-              {paymentMethods.map(method => (
-                <div key={method.value} className="col-6">
-                  <FormRadioCard
-                    name="paymentMethod"
-                    text={method.text}
-                    value={method.value}
-                    icon={method.icon}
-                    required={true}
+              <div className="row">
+                <div className="col-12">
+                  <Label
+                    value={`${intl.formatMessage(messages.methodLabel)} *`}
+                    error={errors.paymentMethod}
                   />
                 </div>
-              ))}
-            </div>
-
-            <hr/>
-
-            <SafeAlert>
-              <p>
-                <FormattedMessage {...messages.info.message} />
-              </p>
-            </SafeAlert>
-
-            <SafeAlert style={{ marginTop: '10px', marginBottom: '15px' }}>
-              <div className="icon">
-                <FontAwesome.FaLock />
+                {paymentMethods.map(method => (
+                  <div key={method.value} className="col-6">
+                    <FormRadioCard
+                      name="paymentMethod"
+                      text={method.text}
+                      value={method.value}
+                      icon={method.icon}
+                      ref={register({ required: true })}
+                    />
+                  </div>
+                ))}
+                {errors.paymentMethod && (
+                  <div className="col-12">
+                    <InputError>
+                      <FormattedMessage {...messages.methodIsRequired} />
+                    </InputError>
+                  </div>
+                )}
               </div>
-              <p>
-                <strong>
-                  <FormattedMessage {...messages.info.security} />
-                </strong>
-              </p>
-            </SafeAlert>
 
-            <FormButton
-              type="submit"
-              theme="primary"
-              value={intl.formatMessage(messages.buttonSubmit)}
-              loading={loading}
-            />
-          </form>
+              <hr/>
+
+              <SafeAlert>
+                <p>
+                  <FormattedMessage {...messages.info.message} />
+                </p>
+              </SafeAlert>
+
+              <SafeAlert style={{ marginTop: '10px', marginBottom: '15px' }}>
+                <div className="icon">
+                  <FontAwesome.FaLock />
+                </div>
+                <p>
+                  <strong>
+                    <FormattedMessage {...messages.info.security} />
+                  </strong>
+                </p>
+              </SafeAlert>
+
+              <FormButton
+                type="submit"
+                theme="primary"
+                value={intl.formatMessage(messages.buttonSubmit)}
+                loading={loading}
+              />
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

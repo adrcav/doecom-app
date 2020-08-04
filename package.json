@@ -10,22 +10,25 @@
     "axios-hooks": "^2.1.0",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
+    "js-cookie": "^2.2.1",
     "moment": "^2.27.0",
     "polished": "^3.6.5",
     "react": "^16.13.1",
     "react-currency-masked-input": "^2.5.0",
     "react-dom": "^16.13.1",
     "react-ga": "^3.1.2",
+    "react-hook-form": "^6.2.0",
     "react-icons": "^3.10.0",
     "react-intl": "^5.2.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-toastify": "^6.0.5",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:fake-api": "json-server -w -d 150 -p 5000 -i _id -r src/util/dbRoutes.json src/util/db.json",
+    "start:fake-api": "json-server -w -d 150 -p 5050 -i _id -r src/util/dbRoutes.json src/util/db.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

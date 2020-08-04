@@ -3,13 +3,14 @@ import * as FontAwesome from 'react-icons/fa';
 
 import { Container } from './styles';
 
-const FormRadioCard = ({
+const FormRadioCard = React.forwardRef(({
   text,
   value,
   icon,
   name,
-  required = false
-}) => {
+  required = false,
+  defaultValue = null,
+}, ref) => {
   const Icon = FontAwesome[icon] || FontAwesome['FaArrowUp'];
   return (
     <Container>
@@ -18,7 +19,8 @@ const FormRadioCard = ({
         name={name}
         id={`${name}_${value}`}
         value={value}
-        required={required}
+        defaultChecked={defaultValue === value}
+        ref={ref}
       />
       <label htmlFor={`${name}_${value}`}>
         <div className="icon">
@@ -32,6 +34,6 @@ const FormRadioCard = ({
       </label>
     </Container>
   );
-};
+});
 
 export default FormRadioCard;

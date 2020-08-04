@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FaCalendarAlt, FaUser, FaPager } from 'react-icons/fa';
+import { FaCalendarAlt, FaUser, FaPager, FaEnvelope } from 'react-icons/fa';
 import useAxios from 'axios-hooks';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import { CauseImage, CauseTitleSection, CauseFeature } from './styles';
 
+import { colors } from '../../components/theme';
 import { LoadingSpinner } from '../../components/styles';
 import BackButton from '../../components/BackButton';
 import FormButton from '../../components/FormButton';
 import CauseInfo from '../../components/CauseInfo';
+
+import { visit } from '../../services/beacon';
 
 const Cause = ({ match }) => {
   const intl = useIntl();
@@ -21,6 +25,15 @@ const Cause = ({ match }) => {
   const [{ loading, error, data: cause }] = useAxios({
     url: `/causes/${id}`
   });
+
+  useEffect(() => {
+    const setVisit = async (page) => {
+      await visit(page._id);
+    };
+    if (cause) {
+      setVisit(cause);
+    }
+  }, [cause]);
 
   const handleDonate = () => history.push(`/give/${cause._id}`);
 
@@ -53,11 +66,12 @@ const Cause = ({ match }) => {
                   <FormattedMessage {...messages.actions} />
                 </CauseTitleSection>
               </div>
-              {cause.banners.map(banner => (
-                <div key={banner._id} className="col-6">
-                  <CauseImage image={banner.image} />
-                </div>
-              ))}
+              <div className="col-6">
+                <CauseImage image={cause.banners[0] || '/images/no-picture.png'} />
+              </div>
+              <div className="col-6">
+                <CauseImage image={cause.banners[1] || '/images/no-picture.png'} />
+              </div>
             </div>
           </div>
 
@@ -67,7 +81,9 @@ const Cause = ({ match }) => {
                 <FaCalendarAlt />
               </div>
               <div className="CauseFeature__content">
-                <p className="CauseFeature__title">Cadastrada em 28/07/2020</p>
+                <p className="CauseFeature__title">
+                  <FormattedMessage {...messages.info.register} /> <span style={{ color: colors.brand.dark }}>{moment(cause.createdAt).format('DD/MM/YYYY')}</span>
+                </p>
               </div>
             </CauseFeature>
 
@@ -76,19 +92,30 @@ const Cause = ({ match }) => {
                 <FaUser />
               </div>
               <div className="CauseFeature__content">
-                <p className="CauseFeature__title">Responsável: <span>José da Silva</span></p>
+                <p className="CauseFeature__title"><FormattedMessage {...messages.info.owner} /> <span style={{ color: colors.brand.dark }}>{cause.user.name}</span></p>
               </div>
             </CauseFeature>
 
-            <CauseFeature className="CauseFeature--has-description">
+            <CauseFeature>
               <div className="CauseFeature__icon">
-                <FaPager />
+                <FaEnvelope />
               </div>
               <div className="CauseFeature__content">
-                <p className="CauseFeature__title">Informações:</p>
-                <p className="CauseFeature__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p className="CauseFeature__title"><FormattedMessage {...messages.info.contact} /> <span style={{ color: colors.brand.dark }}>{cause.user.email}</span></p>
               </div>
             </CauseFeature>
+
+            {cause.description.length > 0 && (
+              <CauseFeature className="CauseFeature--has-description">
+                <div className="CauseFeature__icon">
+                  <FaPager />
+                </div>
+                <div className="CauseFeature__content">
+                  <p className="CauseFeature__title"><FormattedMessage {...messages.info.description} /></p>
+                  <p className="CauseFeature__description">{cause.description}</p>
+                </div>
+              </CauseFeature>
+            )}
           </div>
 
           <div className="col-12" style={{ marginTop: '20px' }}>

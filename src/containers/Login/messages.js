@@ -14,6 +14,10 @@ const messages = {
     id: 'login.emailDescription',
     defaultMessage: 'Type your email'
   },
+  emailIsRequired: {
+    id: 'login.emailIsRequired',
+    defaultMessage: 'Email is required'
+  },
   passwordLabel: {
     id: 'login.passwordLabel',
     defaultMessage: 'Password'
@@ -21,6 +25,10 @@ const messages = {
   passwordDescription: {
     id: 'login.passwordDescription',
     defaultMessage: 'Type your password'
+  },
+  passwordIsRequired: {
+    id: 'login.passwordIsRequired',
+    defaultMessage: 'Password is required'
   },
   buttonSubmit: {
     id: 'login.buttonSubmit',

@@ -9,7 +9,8 @@ export const InputGroup = styled.div`
   margin: 0 0 10px;
 
   &.has-icon {
-    input {
+    input,
+    textarea {
       padding-left: 40px;
     }
   }
@@ -33,7 +34,8 @@ export const InputGroup = styled.div`
     }
   }
 
-  input {
+  input,
+  textarea {
     display: block;
     width: 100%;
     height: auto;
@@ -56,6 +58,18 @@ export const InputGroup = styled.div`
       & + label {
         color: ${colors.action.primary.default};
       }
+    }
+  }
+
+  &.input--error {
+    & + label {
+      color: ${colors.action.danger.default};
+    }
+
+    input,
+    textarea {
+      border-color: ${colors.action.danger.default};
+      box-shadow: 0 0 0 0.2rem ${rgba(colors.action.danger.default, 0.1)};
     }
   }
 `;

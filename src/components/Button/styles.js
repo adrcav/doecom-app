@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 import { colors } from '../theme';
+import { rotate } from '../keyframes';
 
 export const Container = styled.button`
   padding: 3px 18px 3px;
@@ -10,6 +11,8 @@ export const Container = styled.button`
   align-items: center;
   border: 1.5px solid;
   transition: all .3s ease-in-out;
+  position: relative;
+  overflow: hidden;
 
   & > .icon {
     width: 22px;
@@ -21,6 +24,8 @@ export const Container = styled.button`
     border-radius: 50%;
     margin-right: 5px;
     transition: all .3s ease-in-out;
+    visibility: visible;
+    opacity: 1;
   }
 
   & > p {
@@ -28,6 +33,49 @@ export const Container = styled.button`
     font-weight: 500;
     line-height: 1rem;
     transition: all .3s ease-in-out;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .Container__spinner {
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+
+    &:before {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin-top: -10px;
+      margin-left: -10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, .35);
+      border-top-color: white;
+      animation: ${rotate} .6s linear infinite;
+    }
+  }
+
+  &.Container--has-loading {
+    & > span {
+      visibility: hidden;
+    }
+
+    .Container__spinner {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &.Container--has-loading {
+    p,
+    .icon {
+      visibility: hidden;
+      opacity: 0;
+    }
   }
 
   &.primary {
@@ -42,6 +90,13 @@ export const Container = styled.button`
     p {
       color: white;
       margin: 0;
+    }
+
+    .Container__spinner {
+      &:before {
+        border-color: rgba(255, 255, 255, .35);
+        border-top-color: white;
+      }
     }
 
     &:hover {
@@ -61,6 +116,13 @@ export const Container = styled.button`
     p {
       color: ${colors.action.primary.default};
       margin: 0;
+    }
+
+    .Container__spinner {
+      &:before {
+        border-color: rgba(255, 255, 255, .35);
+        border-top-color: ${colors.action.primary.default};
+      }
     }
 
     &:hover {

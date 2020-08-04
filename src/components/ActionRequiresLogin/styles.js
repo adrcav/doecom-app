@@ -17,10 +17,12 @@ export const Container = styled.div`
   align-items: center;
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
 
   &.show {
     visibility: visible;
     opacity: 1;
+    pointer-events: all;
   }
 `;
 

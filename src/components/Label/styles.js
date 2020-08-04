@@ -11,4 +11,8 @@ export const Container = styled.label`
   &.active {
     color: ${colors.action.primary.default};
   }
+
+  &.error {
+    color: ${colors.action.danger.default};
+  }
 `;

@@ -34,8 +34,7 @@ const Verify = ({ location }) => {
         if (data && data.error) throw data.error;
         setVerified(true);
       } catch (error) {
-        // toast.error(intl.formatMessage(errorMessage(error.code)));
-        toast.error(intl.formatMessage(errorMessage('UNKNOWN_ERROR')));
+        toast.error(intl.formatMessage(errorMessage(error.code)));
       }
     })();
   }, [token, verify, intl]);
