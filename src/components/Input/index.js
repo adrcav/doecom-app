@@ -1,7 +1,8 @@
 import React from 'react';
 import * as FontAwesome from 'react-icons/fa';
 import classNames from 'classnames';
-import CurrencyInput from 'react-currency-masked-input';
+import MaskedInput from 'react-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 import { InputGroup } from './styles';
 import Label from '../Label';
@@ -13,6 +14,21 @@ const Input = React.forwardRef((props, ref) => {
     Icon = FontAwesome[props.icon] || FontAwesome['FaAddressCard'];
   }
 
+  const defaultMaskOptions = {
+    prefix: 'R$ ',
+    suffix: '',
+    includeThousandsSeparator: true,
+    thousandsSeparatorSymbol: '.',
+    allowDecimal: true,
+    decimalSymbol: ',',
+    decimalLimit: 2, // how many digits allowed after the decimal
+    integerLimit: 7, // limit length of integer numbers
+    allowNegative: false,
+    allowLeadingZeroes: false,
+  }
+
+  const currencyMask = createNumberMask(defaultMaskOptions);
+
   return (
     <div className="d-flex flex-column-reverse">
       <InputGroup className={classNames({
@@ -20,7 +36,15 @@ const Input = React.forwardRef((props, ref) => {
         'input--error': props.error
       })}>
         {props.maskType === 'currency' ? (
-          <CurrencyInput separator="," {...props} />
+          <MaskedInput
+            mask={currencyMask}
+            type={props.type}
+            name={props.name}
+            className={props.className}
+            placeholder={props.placeholder}
+            ref={ref}
+            onChange={(event) => props.handleChange ? props.handleChange(event.target.value) : null}
+          />
         ) : props.type === 'textarea' ? (
           <textarea {...props} ref={ref} />
         ) : (

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as FontAwesome from 'react-icons/fa';
 import useAxios from 'axios-hooks';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -26,7 +26,7 @@ const Give = ({ match }) => {
   const { id } = match.params;
   const history = useHistory();
   const auth = useContext(AuthContext);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, control, handleSubmit, errors } = useForm();
 
   const [{ loading }, giveAmount] = useAxios({
     url: `/causes/${id}/donation`,
@@ -68,6 +68,8 @@ const Give = ({ match }) => {
     element.click();
   };
 
+  const numberParser = (value) => parseFloat(value.replace(/[^0-9.,]/g, '').replace(/\./, '').replace(',', '.'));
+
   return (
     <div className="container" style={{ marginBottom: '20px' }}>
       <BackButton />
@@ -99,7 +101,7 @@ const Give = ({ match }) => {
               {!auth.isAuthenticated() && (
                 <div className="form-group">
                   <Input
-                  label={`${intl.formatMessage(messages.emailLabel)} *`}
+                    label={`${intl.formatMessage(messages.emailLabel)} *`}
                     type="email"
                     name="email"
                     icon="FaEnvelope"
@@ -117,18 +119,27 @@ const Give = ({ match }) => {
               )}
 
               <div className="form-group">
-                <Input
-                  label={`${intl.formatMessage(messages.amountLabel)} *`}
-                  type="tel"
-                  inputMode="number"
+                <Controller
+                  control={control}
                   name="amount"
-                  icon="FaDollarSign"
-                  className="form-control"
-                  placeholder={intl.formatMessage(messages.amountDescription)}
-                  /*maskType="currency"
-                  pattern="*"*/
+                  render={({ onChange }) => (
+                    <Input
+                      label={`${intl.formatMessage(messages.amountLabel)} *`}
+                      type="tel"
+                      inputMode="number"
+                      name="amountMasked"
+                      className="form-control"
+                      placeholder={intl.formatMessage(messages.amountDescription)}
+                      maskType="currency"
+                      error={errors.amount}
+                      handleChange={(value) => onChange(numberParser(value))}
+                    />
+                  )}
+                />
+                <input
+                  type="hidden"
+                  name="amount"
                   ref={register({ required: true })}
-                  error={errors.amount}
                 />
                 {errors.amount && (
                   <InputError>
