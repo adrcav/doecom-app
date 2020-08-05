@@ -11,7 +11,8 @@ export const StateProvider = ({ reducer, initialState, children }) => (
 export const useStateValue = () => useContext(StateContext);
 
 export const initialState = {
-  account: {}
+  account: {},
+  myCauses: null
 };
 
 export const reducer = (state, action) => {
@@ -20,6 +21,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         account: action.value
+      };
+    case 'updateMyCauses':
+      return {
+        ...state,
+        myCauses: action.value
       };
     default:
       return state;

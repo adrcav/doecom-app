@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Controller } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -11,15 +12,10 @@ import ImageUpload from '../../components/ImageUpload';
 
 import { states as dataStates } from '../../util/data';
 
-const Form = ({ formControl, handleSubmit, loading = false }) => {
+const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
   const intl = useIntl();
 
   const states = dataStates.map(state => ({ value: state.uf, text: state.name }));
-
-  useEffect(() => {
-    formControl.register('avatar');
-    formControl.register('image');
-  }, [formControl]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -43,15 +39,33 @@ const Form = ({ formControl, handleSubmit, loading = false }) => {
       <div className="form-group">
         <Label
           value={`${intl.formatMessage(messages.form.avatarLabel)} *`}
-          error={formControl.errors.avatar}
+          error={formControl.errors.avatar || formControl.errors.avatarUpload}
         />
-        <ImageUpload
-          fieldName="avatar"
-          value={formControl.getValues('avatar')}
-          setValue={formControl.setValue}
-          width="100px"
+        <Controller
+          control={formControl.control}
+          name="avatar"
+          render={({ onChange }) => (
+            <ImageUpload
+              fieldName="avatar"
+              fieldNameFile="avatarUpload"
+              value={formControl.watch('avatar')}
+              setValue={formControl.setValue}
+              handleChange={(value) => {
+                onChange(URL.createObjectURL(value[0]));
+                formControl.setValue('avatarUpload', value);
+              }}
+              width="100px"
+            />
+          )}
         />
-        {formControl.errors.avatar && (
+        <input
+          type="file"
+          name="avatarUpload"
+          ref={formControl.register({ required: !edit })}
+          accept=".png, .jpg, .jpeg"
+          style={{ display: 'none' }}
+        />
+        {(formControl.errors.avatar || formControl.errors.avatarUpload) && (
           <InputError>
             <FormattedMessage {...messages.form.avatarIsRequired} />
           </InputError>
@@ -86,16 +100,34 @@ const Form = ({ formControl, handleSubmit, loading = false }) => {
       <div className="form-group">
         <Label
           value={`${intl.formatMessage(messages.form.imageLabel)} *`}
-          error={formControl.errors.image}
+          error={formControl.errors.image || formControl.errors.imageUpload}
         />
-        <ImageUpload
-          fieldName="image"
-          value={formControl.getValues('image')}
-          setValue={formControl.setValue}
-          width="200px"
-          ratioHeight={57.53}
+        <Controller
+          control={formControl.control}
+          name="image"
+          render={({ onChange }) => (
+            <ImageUpload
+              fieldName="image"
+              fieldNameFile="imageUpload"
+              value={formControl.watch('image')}
+              setValue={formControl.setValue}
+              handleChange={(value) => {
+                onChange(URL.createObjectURL(value[0]));
+                formControl.setValue('imageUpload', value);
+              }}
+              width="200px"
+              ratioHeight={57.53}
+            />
+          )}
         />
-        {formControl.errors.image && (
+        <input
+          type="file"
+          name="imageUpload"
+          ref={formControl.register({ required: !edit })}
+          accept=".png, .jpg, .jpeg"
+          style={{ display: 'none' }}
+        />
+        {(formControl.errors.image || formControl.errors.imageUpload) && (
           <InputError>
             <FormattedMessage {...messages.form.imageIsRequired} />
           </InputError>

@@ -40,6 +40,7 @@ const Router = () => {
   const [{ account }, dispatch] = useStateValue();
 
   const [{ loading, error }, loadAccount] = useAxios('/account', { manual: true });
+  const [{ error: errorMyCauses }, loadMyCauses] = useAxios('/causes/my-causes', { manual: true });
 
   const [{ loading: loadingResendVerification }, resendVerification] = useAxios({
     method: 'POST',
@@ -53,18 +54,32 @@ const Router = () => {
         type: 'updateAccount',
         value: dataAccount
       });
+
+      const { data: dataMyCauses } = await loadMyCauses();
+      dispatch({
+        type: 'updateMyCauses',
+        value: dataMyCauses
+      });
     };
 
     if (auth.isAuthenticated()) {
       loadData();
     }
-  }, [loadAccount, dispatch, auth]);
+  }, [loadAccount, loadMyCauses, dispatch, auth]);
 
   const refetchAccount = async () => {
     const { data: dataAccount } = await loadAccount();
     dispatch({
       type: 'updateAccount',
       value: dataAccount
+    });
+  };
+
+  const refetchMyCauses = async () => {
+    const { data: dataMyCauses } = await loadMyCauses();
+    dispatch({
+      type: 'updateMyCauses',
+      value: dataMyCauses
     });
   };
 
@@ -78,8 +93,8 @@ const Router = () => {
     }
   };
 
-  if (error) return (
-    <p>Error!</p>
+  if (error || errorMyCauses) return (
+    <p>Service error!</p>
   );
 
   return (
@@ -138,7 +153,15 @@ const Router = () => {
               />
             )}
           />
-          <Route path="/my-causes" component={MyCauses} />
+          <Route
+            path="/my-causes"
+            render={(props) => (
+              <MyCauses
+                {...props}
+                refetchParent={refetchMyCauses}
+              />
+            )}
+          />
           <Route path="/cause/new" component={MyCause} exact />
           <Route path="/cause/:id/edit" component={MyCauseEdit} exact />
           <Route path="/cause/:id" component={Cause} />

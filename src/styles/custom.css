@@ -1,0 +1,12 @@
+/* Custom CSS here */
+
+/* Toastify */
+.Toastify__toast-body {
+  font-size: .9rem;
+  font-family: unset;
+}
+
+/* Sweet Alert */
+.swal-text {
+  text-align: center;
+}

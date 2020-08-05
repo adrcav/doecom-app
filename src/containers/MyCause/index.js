@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import useAxios from 'axios-hooks';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { FaEye } from 'react-icons/fa';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -11,9 +12,11 @@ import { errorMessage } from '../../services/errors';
 import { useStateValue } from '../../services/state';
 import Api from '../../services/api';
 
+import { CausePreview } from './styles';
 import BackButton from '../../components/BackButton';
 import Title from '../../components/Title';
 import NotificationIcon from '../../components/NotificationIcon';
+import CauseCard from '../../components/CauseCard';
 import Form from './Form';
 
 const MyCause = () => {
@@ -41,11 +44,11 @@ const MyCause = () => {
 
   const handleRegisterCause = async (values) => {
     try {
-      if (values.avatar && typeof values.avatar !== 'string') {
-        values.avatar = await uploadImage(values.avatar);
+      if (values.avatarUpload.length) {
+        values.avatar = await uploadImage(values.avatarUpload[0]);
       }
-      if (values.image && typeof values.image !== 'string') {
-        values.image = await uploadImage(values.image);
+      if (values.imageUpload.length) {
+        values.image = await uploadImage(values.imageUpload[0]);
       }
       const { data } = await registerCause({ data: values });
       if (data && data.error) throw data.error;
@@ -89,25 +92,48 @@ const MyCause = () => {
       )}
 
       {account && account.verified && (
-        <div className="row justify-content-center">
-          <div className="col-12">
-            <p style={{
-              textAlign: 'right',
-              color: '#999',
-              fontStyle: 'italic',
-              fontSize: '.9rem',
-              margin: '-10px 0 10px'
-            }}>(*) <FormattedMessage {...messages.form.fieldRequired} /></p>
+        <>
+          <div className="row justify-content-center mb-4">
+            <div className="col-md-6 col-lg-5">
+              <CausePreview>
+                <CauseCard
+                  data={{
+                    name: form.watch('name'),
+                    avatar: form.watch('avatar'),
+                    image: form.watch('image')
+                  }}
+                />
+                <div className="CausePreview__alert">
+                  <div className="CausePreview__icon">
+                    <FaEye />
+                  </div>
+                  <p className="CausePreview__text">
+                    <FormattedMessage {...messages.preview} />
+                  </p>
+                </div>
+              </CausePreview>
+            </div>
           </div>
+          <div className="row justify-content-center">
+            <div className="col-12">
+              <p style={{
+                textAlign: 'right',
+                color: '#999',
+                fontStyle: 'italic',
+                fontSize: '.9rem',
+                margin: '-10px 0 10px'
+              }}>(*) <FormattedMessage {...messages.form.fieldRequired} /></p>
+            </div>
 
-          <div className="col-lg-6">
-            <Form
-              formControl={form}
-              handleSubmit={handleSubmit(handleRegisterCause)}
-              loading={loading || loadingUpload}
-            />
+            <div className="col-lg-6">
+              <Form
+                handleSubmit={handleSubmit(handleRegisterCause)}
+                formControl={form}
+                loading={loading || loadingUpload}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
 import { configure } from 'axios-hooks';
 
-import './App.css';
+import './styles/global.css';
+import './styles/custom.css';
 
 import Router from './Router';
 import { Auth, AuthContext } from './services/auth';

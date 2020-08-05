@@ -6,6 +6,11 @@ const messages = {
     defaultMessage: 'Add cause'
   },
 
+  preview: {
+    id: 'myCause.preview',
+    defaultMessage: 'Preview'
+  },
+
   edit: {
     title: {
       id: 'myCause.edit.title',

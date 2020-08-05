@@ -19,8 +19,10 @@ const ImageUpload = ({
   alt = 'image',
   setValue,
   fieldName,
+  fieldNameFile,
   width = '120px',
-  ratioHeight = 100
+  ratioHeight = 100,
+  handleChange = null
 }) => {
   const intl = useIntl();
   let inputRef = null;
@@ -34,7 +36,11 @@ const ImageUpload = ({
       toast.error(intl.formatMessage(errorMessage('IMAGE_VERY_LARGE')));
       return;
     }
-    setValue(fieldName, image);
+    if (handleChange) {
+      handleChange(event.target.files);
+    } else {
+      setValue(fieldName, image);
+    }
     const reader = new FileReader();
     reader.onload = e => {
       setImagePreview(e.target.result);

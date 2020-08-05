@@ -100,6 +100,7 @@
   "cause.alerts.notFound": "Causa não encontrada!",
 
   "myCause.title": "Cadastrar causa",
+  "myCause.preview": "Pré-visualização",
   "myCause.form.fieldRequired": "Campo obrigatório",
   "myCause.form.nameLabel": "Nome:",
   "myCause.form.nameDescription": "Qual o nome da sua causa?",
