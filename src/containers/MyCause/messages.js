@@ -47,6 +47,10 @@ const messages = {
       id: 'myCause.form.fieldRequired',
       defaultMessage: 'Field required'
     },
+    recommended: {
+      id: 'myCause.form.recommended',
+      defaultMessage: 'Recommended:'
+    },
     nameLabel: {
       id: 'myCause.form.nameLabel',
       defaultMessage: 'Name:'

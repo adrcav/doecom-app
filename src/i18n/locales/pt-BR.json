@@ -102,6 +102,7 @@
   "myCause.title": "Cadastrar causa",
   "myCause.preview": "Pré-visualização",
   "myCause.form.fieldRequired": "Campo obrigatório",
+  "myCause.form.recommended": "Recomendado:",
   "myCause.form.nameLabel": "Nome:",
   "myCause.form.nameDescription": "Qual o nome da sua causa?",
   "myCause.form.nameIsRequired": "Nome é obrigatório",

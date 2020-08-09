@@ -58,7 +58,7 @@ const Input = React.forwardRef((props, ref) => {
         )}
       </InputGroup>
       {props.label && (
-        <Label value={props.label} />
+        <Label value={props.label} help={props.help || null} />
       )}
     </div>
   );

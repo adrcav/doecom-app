@@ -39,6 +39,7 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
       <div className="form-group">
         <Label
           value={`${intl.formatMessage(messages.form.avatarLabel)} *`}
+          help={`${intl.formatMessage(messages.form.recommended)} 150x150 pixels`}
           error={formControl.errors.avatar || formControl.errors.avatarUpload}
         />
         <Controller
@@ -100,6 +101,7 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
       <div className="form-group">
         <Label
           value={`${intl.formatMessage(messages.form.imageLabel)} *`}
+          help={`${intl.formatMessage(messages.form.recommended)} 1080x620 pixels`}
           error={formControl.errors.image || formControl.errors.imageUpload}
         />
         <Controller
