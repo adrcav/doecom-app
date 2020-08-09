@@ -50,6 +50,12 @@ const MyCause = () => {
       if (values.imageUpload.length) {
         values.image = await uploadImage(values.imageUpload[0]);
       }
+      if (values.bannersUpload[0].length) {
+        values.banners[0] = await uploadImage(values.bannersUpload[0][0]);
+      }
+      if (values.bannersUpload[1].length) {
+        values.banners[1] = await uploadImage(values.bannersUpload[1][0]);
+      }
       const { data } = await registerCause({ data: values });
       if (data && data.error) throw data.error;
       toast.success(intl.formatMessage(messages.alerts.created));

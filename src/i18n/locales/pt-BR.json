@@ -116,6 +116,7 @@
   "myCause.form.imageLabel": "Banner:",
   "myCause.form.imageDescription": "Informe uma imagem de destaque",
   "myCause.form.imageIsRequired": "Banner é obrigatório",
+  "myCause.form.actsLabel": "Ações:",
   "myCause.form.stateLabel": "Estado:",
   "myCause.form.stateDescription": "UF",
   "myCause.form.stateIsRequired": "Estado é obrigatório",

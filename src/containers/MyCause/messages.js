@@ -103,6 +103,10 @@ const messages = {
       id: 'myCause.form.imageIsRequired',
       defaultMessage: 'Image is required'
     },
+    actsLabel: {
+      id: 'myCause.form.actsLabel',
+      defaultMessage: 'Acts:'
+    },
     stateLabel: {
       id: 'myCause.form.stateLabel',
       defaultMessage: 'State:'

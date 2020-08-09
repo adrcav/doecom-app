@@ -104,36 +104,108 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
           help={`${intl.formatMessage(messages.form.recommended)} 1080x620 pixels`}
           error={formControl.errors.image || formControl.errors.imageUpload}
         />
-        <Controller
-          control={formControl.control}
-          name="image"
-          render={({ onChange }) => (
-            <ImageUpload
-              fieldName="image"
-              fieldNameFile="imageUpload"
-              value={formControl.watch('image')}
-              setValue={formControl.setValue}
-              handleChange={(value) => {
-                onChange(URL.createObjectURL(value[0]));
-                formControl.setValue('imageUpload', value);
-              }}
-              width="200px"
-              ratioHeight={57.53}
+        <div className="row">
+          <div className="col-md-6">
+            <Controller
+              control={formControl.control}
+              name="image"
+              render={({ onChange }) => (
+                <ImageUpload
+                  fieldName="image"
+                  fieldNameFile="imageUpload"
+                  value={formControl.watch('image')}
+                  setValue={formControl.setValue}
+                  handleChange={(value) => {
+                    onChange(URL.createObjectURL(value[0]));
+                    formControl.setValue('imageUpload', value);
+                  }}
+                  width="100%"
+                  ratioHeight={57.53}
+                />
+              )}
             />
-          )}
-        />
-        <input
-          type="file"
-          name="imageUpload"
-          ref={formControl.register({ required: !edit })}
-          accept=".png, .jpg, .jpeg"
-          style={{ display: 'none' }}
-        />
-        {(formControl.errors.image || formControl.errors.imageUpload) && (
-          <InputError>
-            <FormattedMessage {...messages.form.imageIsRequired} />
-          </InputError>
-        )}
+            <input
+              type="file"
+              name="imageUpload"
+              ref={formControl.register({ required: !edit })}
+              accept=".png, .jpg, .jpeg"
+              style={{ display: 'none' }}
+            />
+            {(formControl.errors.image || formControl.errors.imageUpload) && (
+              <InputError>
+                <FormattedMessage {...messages.form.imageIsRequired} />
+              </InputError>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-12">
+          <Label
+            value={intl.formatMessage(messages.form.actsLabel)}
+            help={`${intl.formatMessage(messages.form.recommended)} 1080x620 pixels`}
+            error={(formControl.errors['banners[0]'] || formControl.errors.imagers0Upload) || (formControl.errors['banners[1]'] || formControl.errors.imagers1Upload)}
+          />
+        </div>
+        <div className="col-6">
+          <div className="form-group">
+            <Controller
+              control={formControl.control}
+              name="banners[0]"
+              render={({ onChange }) => (
+                <ImageUpload
+                  fieldName="banners[0]"
+                  fieldNameFile="bannersUpload[0]"
+                  value={formControl.watch('banners[0]')}
+                  setValue={formControl.setValue}
+                  handleChange={(value) => {
+                    onChange(URL.createObjectURL(value[0]));
+                    formControl.setValue('bannersUpload[0]', value);
+                  }}
+                  width="100%"
+                  ratioHeight={57.53}
+                />
+              )}
+            />
+            <input
+              type="file"
+              name="bannersUpload[0]"
+              ref={formControl.register()}
+              accept=".png, .jpg, .jpeg"
+              style={{ display: 'none' }}
+            />
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="form-group">
+            <Controller
+              control={formControl.control}
+              name="banners[1]"
+              render={({ onChange }) => (
+                <ImageUpload
+                  fieldName="banners[1]"
+                  fieldNameFile="bannersUpload[1]"
+                  value={formControl.watch('banners[1]')}
+                  setValue={formControl.setValue}
+                  handleChange={(value) => {
+                    onChange(URL.createObjectURL(value[0]));
+                    formControl.setValue('bannersUpload[1]', value);
+                  }}
+                  width="100%"
+                  ratioHeight={57.53}
+                />
+              )}
+            />
+            <input
+              type="file"
+              name="bannersUpload[1]"
+              ref={formControl.register()}
+              accept=".png, .jpg, .jpeg"
+              style={{ display: 'none' }}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="row">
