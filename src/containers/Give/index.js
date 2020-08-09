@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as FontAwesome from 'react-icons/fa';
 import useAxios from 'axios-hooks';
@@ -26,7 +26,7 @@ const Give = ({ match }) => {
   const { id } = match.params;
   const history = useHistory();
   const auth = useContext(AuthContext);
-  const { register, control, handleSubmit, errors } = useForm();
+  const { register, control, reset, handleSubmit, errors } = useForm();
 
   const [{ loading }, giveAmount] = useAxios({
     url: `/causes/${id}/donation`,
@@ -49,6 +49,12 @@ const Give = ({ match }) => {
       icon: 'FaRegCreditCard',
     },
   ];
+
+  useEffect(() => {
+    if (cause && cause.default) {
+      reset(cause.default);
+    }
+  }, [cause, reset]);
 
   const handleGive = async (values) => {
     try {
@@ -133,6 +139,7 @@ const Give = ({ match }) => {
                       maskType="currency"
                       error={errors.amount}
                       handleChange={(value) => onChange(numberParser(value))}
+                      defaultValue={cause.default.amount > 0 ? cause.default.amount : null}
                     />
                   )}
                 />
@@ -145,6 +152,19 @@ const Give = ({ match }) => {
                   <InputError>
                     <FormattedMessage {...messages.amountIsRequired} />
                   </InputError>
+                )}
+                {cause.default.amount > 0 && (
+                  <div className="alert alert-info d-flex align-items-center">
+                    <FontAwesome.FaInfoCircle />
+                    <p style={{
+                      margin: 0,
+                      fontSize: '.85rem',
+                      fontWeight: 500,
+                      marginLeft: '5px'
+                    }}>
+                      <FormattedMessage {...messages.amountDefaultAlert} />
+                    </p>
+                  </div>
                 )}
               </div>
 
@@ -171,6 +191,21 @@ const Give = ({ match }) => {
                     <InputError>
                       <FormattedMessage {...messages.methodIsRequired} />
                     </InputError>
+                  </div>
+                )}
+                {cause.default.paymentMethod.length > 0 && (
+                  <div className="col-12">
+                    <div className="alert alert-info d-flex align-items-center">
+                      <FontAwesome.FaInfoCircle />
+                      <p style={{
+                        margin: 0,
+                        fontSize: '.85rem',
+                        fontWeight: 500,
+                        marginLeft: '5px'
+                      }}>
+                        <FormattedMessage {...messages.methodDefaultAlert} />
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>

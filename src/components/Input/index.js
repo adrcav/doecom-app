@@ -42,6 +42,7 @@ const Input = React.forwardRef((props, ref) => {
             name={props.name}
             className={props.className}
             placeholder={props.placeholder}
+            defaultValue={props.defaultValue || null}
             ref={ref}
             onChange={(event) => props.handleChange ? props.handleChange(event.target.value) : null}
           />
