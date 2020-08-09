@@ -55,7 +55,7 @@ const Give = ({ match }) => {
       const { data } = await giveAmount({ data: values });
       if (data.error) throw data.error.code;
       handleDonationClick(cause.paymentUrl);
-      history.push('/give/success');
+      history.push(`/give/success?donation=${data._id}`);
     } catch (error) {
       toast.error(intl.formatMessage(errorMessage(error)));
     }

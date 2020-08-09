@@ -24,6 +24,7 @@ import Cause from './containers/Cause';
 import MyCause from './containers/MyCause';
 import MyCauseEdit from './containers/MyCause/Edit';
 import Give from './containers/Give';
+import GiveRate from './containers/GiveRate';
 import Login from './containers/Login';
 import RecoverPassword from './containers/RecoverPassword';
 import ResetPassword from './containers/ResetPassword';
@@ -167,6 +168,7 @@ const Router = () => {
           <Route path="/cause/:id" component={Cause} />
           <Route path="/give/success" component={GiveSuccess} />
           <Route path="/give/:id" component={Give} />
+          <Route path="/donation/:id/rate" component={GiveRate} />
           <Route path="/logout" component={Logout} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/terms-of-use" component={TermsOfUse} />

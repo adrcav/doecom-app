@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -11,6 +11,10 @@ import FormButton from '../FormButton';
 const GiveSuccess = () => {
   const intl = useIntl();
   const history = useHistory();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const donation = params.get('donation');
 
   return (
     <div className="container" style={{ marginBottom: '20px' }}>
@@ -34,7 +38,7 @@ const GiveSuccess = () => {
             type="button"
             theme="primary"
             value={intl.formatMessage(messages.mainButton)}
-            onClick={() => history.push('/')}
+            onClick={() => history.push(`/donation/${donation}/rate`)}
           />
         </div>
       </div>

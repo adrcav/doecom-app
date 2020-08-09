@@ -16,7 +16,7 @@ const messages = {
   },
   mainButton: {
     id: 'giveSuccess.mainButton',
-    defaultMessage: 'Back to Home'
+    defaultMessage: 'Rate your donation'
   },
 };
 

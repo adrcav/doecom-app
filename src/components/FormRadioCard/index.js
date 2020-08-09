@@ -7,6 +7,7 @@ const FormRadioCard = React.forwardRef(({
   text,
   value,
   icon,
+  emoji = null,
   name,
   required = false,
   defaultValue = null,
@@ -24,7 +25,7 @@ const FormRadioCard = React.forwardRef(({
       />
       <label htmlFor={`${name}_${value}`}>
         <div className="icon">
-          <Icon />
+          {emoji ? emoji : <Icon />}
         </div>
         <p>{text}</p>
 
