@@ -1,7 +1,7 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import useAxios from 'axios-hooks';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -9,6 +9,7 @@ import messages from './messages';
 import { AuthContext } from '../../services/auth';
 import { useStateValue } from '../../services/state';
 import { errorMessage } from '../../services/errors';
+import Api from '../../services/api';
 
 import { InputError } from '../../components/styles';
 import BackButton from '../../components/BackButton';
@@ -16,6 +17,8 @@ import Input from '../../components/Input';
 import Select from '../../components/Select';
 import FormButton from '../../components/FormButton';
 import Title from '../../components/Title';
+import Label from '../../components/Label';
+import ImageUpload from '../../components/ImageUpload';
 
 import { states as dataStates } from '../../util/data';
 
@@ -24,6 +27,7 @@ const Account = ({ refetchParent }) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
   const [{ account }] = useStateValue();
+  const [loadingUpload, setLoadingUpload] = useState(false);
 
   const [{ loading }, updateAccount] = useAxios({
     url: '/account',
@@ -55,6 +59,9 @@ const Account = ({ refetchParent }) => {
 
   const handleAccount = async (values) => {
     try {
+      if (values.pictureUpload.length) {
+        values.picture = await uploadImage(values.pictureUpload[0]);
+      }
       const { data } = await updateAccount({ data: values });
       if (data && data.error) throw data.error;
       toast.success(intl.formatMessage(messages.alerts.updated));
@@ -62,6 +69,15 @@ const Account = ({ refetchParent }) => {
     } catch (error) {
       toast.error(intl.formatMessage(errorMessage(error.code)));
     }
+  };
+
+  const uploadImage = async (image) => {
+    const api = Api.instance;
+    setLoadingUpload(true);
+    const { data } = await api.uploadImage(image);
+    setLoadingUpload(false);
+    if (data && data.error) throw data.error;
+    return data.link;
   };
 
   return (
@@ -80,6 +96,37 @@ const Account = ({ refetchParent }) => {
       <div className="row justify-content-center">
         <div className="col-lg-6">
           <form onSubmit={handleSubmit(handleAccount)}>
+            <div className="form-group">
+              <Label
+                value={intl.formatMessage(messages.pictureLabel)}
+                help={`${intl.formatMessage(messages.recommended)} 150x150 pixels`}
+              />
+              <Controller
+                control={form.control}
+                name="picture"
+                render={({ onChange }) => (
+                  <ImageUpload
+                    fieldName="picture"
+                    fieldNameFile="pictureUpload"
+                    value={watch('picture')}
+                    setValue={form.setValue}
+                    handleChange={(value) => {
+                      onChange(URL.createObjectURL(value[0]));
+                      form.setValue('pictureUpload', value);
+                    }}
+                    width="100px"
+                  />
+                )}
+              />
+              <input
+                type="file"
+                name="pictureUpload"
+                ref={register()}
+                accept=".png, .jpg, .jpeg"
+                style={{ display: 'none' }}
+              />
+            </div>
+
             <div className="form-group">
               <Input
                 label={`${intl.formatMessage(messages.nameLabel)} *`}
@@ -192,7 +239,7 @@ const Account = ({ refetchParent }) => {
               type="submit"
               theme="primary"
               value={intl.formatMessage(messages.buttonSubmit)}
-              loading={loading}
+              loading={loading || loadingUpload}
             />
           </form>
         </div>

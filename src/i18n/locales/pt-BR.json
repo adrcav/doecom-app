@@ -179,6 +179,8 @@
 
   "account.title": "Configurações",
   "account.fieldRequired": "Campo obrigatório",
+  "account.recommended": "Recomendado:",
+  "account.pictureLabel": "Imagem de perfil:",
   "account.nameLabel": "Nome:",
   "account.nameDescription": "Informe o seu nome e sobrenome",
   "account.nameIsRequired": "Nome é obrigatório",

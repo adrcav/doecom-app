@@ -11,6 +11,15 @@ const messages = {
     defaultMessage: 'Field required'
   },
 
+  recommended: {
+    id: 'account.recommended',
+    defaultMessage: 'Recommended:'
+  },
+
+  pictureLabel: {
+    id: 'account.pictureLabel',
+    defaultMessage: 'Profile picture:'
+  },
   nameLabel: {
     id: 'account.nameLabel',
     defaultMessage: 'Name:'
