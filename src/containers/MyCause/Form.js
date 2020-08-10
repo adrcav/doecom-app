@@ -248,8 +248,14 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
       </div>
 
       <div className="form-group">
+        <div className="d-flex justify-content-between">
+          <Label value={`${intl.formatMessage(messages.form.paymentUrlLabel)} *`} />
+          <a href="https://help.doecom.org/pt-br/article/o-que-significa-o-link-de-doacao-1hw3z1l/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '.9rem', fontWeight: 500, marginLeft: '3px' }}>
+            <FormattedMessage {...messages.form.paymentUrlHelp} />
+          </a>
+        </div>
+
         <Input
-          label={`${intl.formatMessage(messages.form.paymentUrlLabel)} *`}
           type="text"
           name="paymentUrl"
           className="form-control"

@@ -143,6 +143,10 @@ const messages = {
       id: 'myCause.form.paymentUrlIsRequired',
       defaultMessage: 'URL Donation is required'
     },
+    paymentUrlHelp: {
+      id: 'myCause.form.paymentUrlHelp',
+      defaultMessage: 'Help'
+    },
     buttonSubmit: {
       id: 'myCause.form.buttonSubmit',
       defaultMessage: 'Save'

@@ -126,6 +126,7 @@
   "myCause.form.paymentUrlLabel": "Link de doação:",
   "myCause.form.paymentUrlDescription": "Informe o link para o pagamento da doação",
   "myCause.form.paymentUrlIsRequired": "Link de doação é obrigatório",
+  "myCause.form.paymentUrlHelp": "Saiba mais",
   "myCause.form.buttonSubmit": "Salvar",
   "myCause.errors.accountNotVerified": "Verifique o seu endereço de e-mail e ative sua conta para continuar esta operação.",
 
