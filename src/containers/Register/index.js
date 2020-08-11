@@ -41,6 +41,7 @@ export const Register = () => {
 
   const handleRegister = async (values) => {
     try {
+      values.language = window.navigator.language;
       const { data } = await registerAccount({ data: values });
       if (data && data.error) throw data.error;
       history.push('/register/success');

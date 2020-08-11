@@ -13,6 +13,13 @@ const Footer = () => (
       <p>&copy; {moment().format('YYYY')} Doecom</p>
       <ul>
         <li>
+          <a href="https://help.doecom.org" target="_blank" rel="noopener noreferrer">
+            <p>
+              <FormattedMessage {...messages.help} />
+            </p>
+          </a>
+        </li>
+        <li>
           <NavLink to="/privacy-policy">
             <p>
               <FormattedMessage {...messages.privacyPolicy} />

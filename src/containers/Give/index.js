@@ -71,7 +71,15 @@ const Give = ({ match }) => {
     const element = document.createElement('a');
     element.href = url;
     element.target = '_blank';
-    element.click();
+
+    if (document.createEvent) {
+      var evt = document.createEvent('MouseEvents');
+      evt.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      element.dispatchEvent(evt);
+    }
+    else {
+      element.click();
+    }
   };
 
   const numberParser = (value) => parseFloat(value.replace(/[^0-9.,]/g, '').replace(/\./, '').replace(',', '.'));

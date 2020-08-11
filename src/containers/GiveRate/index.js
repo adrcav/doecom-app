@@ -143,7 +143,7 @@ const GiveRate = ({ match }) => {
               <div className="form-group">
                 <Label
                   value={`${intl.formatMessage(messages.confirmedDonationLabel)} *`}
-                  error={errors.confirmedDonation}
+                  error={errors.confirmed}
                 />
                 <div className="row">
                   {confirmedDonation.map(method => (

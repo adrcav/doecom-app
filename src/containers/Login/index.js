@@ -80,7 +80,7 @@ export const Login = ({ location, refetchParent }) => {
 
             <div className="form-group">
               <div className="d-flex justify-content-between">
-                <Label value={intl.formatMessage(messages.passwordLabel)} />
+                <Label value={intl.formatMessage(messages.passwordLabel)} error={errors.password} />
                 <NavLink to="/recover-password" style={{ fontSize: '.9rem', fontWeight: 500, marginLeft: '3px' }}>
                   <FormattedMessage {...messages.forgotPassword} />
                 </NavLink>

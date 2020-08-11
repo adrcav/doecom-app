@@ -53,6 +53,17 @@ export const Container = styled.div`
           color: ${colors.brand.dark};
         }
       }
+
+      @media (max-width: 768px) {
+        display: block;
+        padding-right: 0;
+        margin-right: 0;
+        text-align: center;
+
+        &:after {
+          display: none;
+        }
+      }
     }
   }
 `;
