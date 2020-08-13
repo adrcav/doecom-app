@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "https://app-dev-doecom.netlify.app"
+  from = "https://doecom-app-dev.netlify.app"
   to = "https://app-dev.doecom.org"
   status = 301
   force = true
