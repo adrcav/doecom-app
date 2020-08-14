@@ -56,6 +56,11 @@ export const Container = styled.div`
       margin: 0;
       color: white;
       font-weight: 500;
+      flex: 1;
+      word-break: break-all;
+
+      display: flex;
+      align-items: center;
     }
   }
 

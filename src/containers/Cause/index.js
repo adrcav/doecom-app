@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FaCalendarAlt, FaUser, FaPager, FaEnvelope } from 'react-icons/fa';
+import { FaCheckCircle, FaCalendarAlt, FaUser, FaPager, FaEnvelope } from 'react-icons/fa';
 import useAxios from 'axios-hooks';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -76,6 +76,17 @@ const Cause = ({ match }) => {
           </div>
 
           <div className="col-12">
+            {cause.confirmed && (
+              <CauseFeature>
+                <div className="CauseFeature__icon" style={{ color: colors.asset.info }}>
+                  <FaCheckCircle />
+                </div>
+                <div className="CauseFeature__content">
+                  <p className="CauseFeature__title" style={{ color: colors.asset.info }}><FormattedMessage {...messages.info.verified} /></p>
+                </div>
+              </CauseFeature>
+            )}
+
             <CauseFeature>
               <div className="CauseFeature__icon">
                 <FaCalendarAlt />

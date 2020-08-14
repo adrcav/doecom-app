@@ -15,6 +15,9 @@ export const colors = {
       hover: '#E74C3C',
     },
   },
+  asset: {
+    info: '#1da1f2',
+  },
   base: {
     light: '#FAFAFA',
     dark: '#333333',

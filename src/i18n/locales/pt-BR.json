@@ -92,7 +92,9 @@
   "myCauses.error": "Não foi possível buscar suas causas voluntárias. Por favor, tente novamente mais tarde.",
   "myCauses.empty": "Você ainda não possui nenhuma causa cadastrada.",
 
+  "cause.verified": "Causa verificada",
   "cause.actions": "Ações realizadas pela causa",
+  "cause.info.verified": "Causa verificada pela Doecom",
   "cause.info.register": "Cadastrada desde:",
   "cause.info.owner": "Responsável:",
   "cause.info.contact": "Contato:",
