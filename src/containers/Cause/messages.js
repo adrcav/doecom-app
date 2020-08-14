@@ -7,6 +7,10 @@ const messages = {
   },
 
   info: {
+    verified: {
+      id: 'cause.info.verified',
+      defaultMessage: 'Cause verified by Doecom'
+    },
     register: {
       id: 'cause.info.register',
       defaultMessage: 'Added at:'

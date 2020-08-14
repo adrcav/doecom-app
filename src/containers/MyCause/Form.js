@@ -24,6 +24,7 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
           label={`${intl.formatMessage(messages.form.nameLabel)} *`}
           type="text"
           name="name"
+          maxlength="40"
           className="form-control"
           placeholder={intl.formatMessage(messages.form.nameDescription)}
           ref={formControl.register({ required: true })}
