@@ -34,6 +34,7 @@ import Account from './containers/Account';
 import Logout from './containers/Logout';
 import PrivacyPolicy from './containers/PrivacyPolicy';
 import TermsOfUse from './containers/TermsOfUse';
+import NotFound from './containers/NotFound';
 
 const Router = () => {
   const intl = useIntl();
@@ -172,6 +173,7 @@ const Router = () => {
           <Route path="/logout" component={Logout} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/terms-of-use" component={TermsOfUse} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
       <Footer />
