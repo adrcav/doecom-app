@@ -28,6 +28,7 @@ const MyCauseEdit = ({ match }) => {
   const { id } = match.params;
   const [{ myCauses }] = useStateValue();
   const [loadingUpload, setLoadingUpload] = useState(false);
+  const [cities, setCities] = useState([]);
 
   if (!auth.isAuthenticated() || !id) {
     history.push('/');
@@ -48,17 +49,32 @@ const MyCauseEdit = ({ match }) => {
     method: 'DELETE'
   }, { manual: true });
 
-  useEffect(() => {
-    if (myCauses) {
-      console.log('>> reset');
-      const data = myCauses.find(item => item._id === id);
-      reset(data);
-    }
-  }, [myCauses, id, reset]);
+  const [{ loading: loadingCities }, getCities] = useAxios({
+    method: 'GET'
+  }, { manual: true });
 
-  /*if (account._id && cause && account._id !== cause.user._id) {
-    history.push('/');
-  }*/
+  useEffect(() => {
+    (async function () {
+      if (myCauses) {
+        const data = myCauses.find(item => item._id === id);
+
+        const values = { ...data };
+        values.state = null;
+        values.city = null;
+        reset(values);
+
+        try {
+          const { data: response } = await getCities(`/locales/states/${data.state}/cities`);
+          if (response && response.error) throw response.error;
+          setCities(response.map(city => ({ value: city.nome, text: city.nome })));
+        } catch (error) {
+          toast.error(intl.formatMessage(errorMessage(error.code)));
+        }
+
+        reset(data);
+      }
+    })();
+  }, [myCauses, id, reset, getCities, intl]);
 
   const handleUpdateCause = async (values) => {
     try {
@@ -117,6 +133,22 @@ const MyCauseEdit = ({ match }) => {
     })
   };
 
+  const handleStateChange = async (event, state = '') => {
+    const value = event.target.value || state;
+    if (!value || !value.length) {
+      setCities([]);
+      return false;
+    }
+
+    try {
+      const { data } = await getCities(`/locales/states/${value}/cities`);
+      if (data && data.error) throw data.error;
+      setCities(data.map(city => ({ value: city.nome, text: city.nome })));
+    } catch (error) {
+      toast.error(intl.formatMessage(errorMessage(error.code)));
+    }
+  };
+
   return (
     <div className="container mb-4">
       <BackButton />
@@ -166,6 +198,9 @@ const MyCauseEdit = ({ match }) => {
                 formControl={form}
                 edit={true}
                 loading={loadingUpdate || loadingUpload}
+                cities={cities}
+                loadingCities={loadingCities}
+                changeState={handleStateChange}
               />
               <hr/>
               <FormButton

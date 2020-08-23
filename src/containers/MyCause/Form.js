@@ -12,7 +12,15 @@ import ImageUpload from '../../components/ImageUpload';
 
 import { states as dataStates } from '../../util/data';
 
-const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
+const Form = ({
+  formControl,
+  handleSubmit,
+  loading = false,
+  edit = false,
+  cities = [],
+  loadingCities = false,
+  changeState = null
+}) => {
   const intl = useIntl();
 
   const states = dataStates.map(state => ({ value: state.uf, text: state.name }));
@@ -220,6 +228,8 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
               options={states}
               ref={formControl.register({ required: true })}
               error={formControl.errors.state}
+              onChange={changeState}
+              loadingOptions={loadingCities}
             />
             {formControl.errors.city && (
               <InputError>
@@ -230,14 +240,15 @@ const Form = ({ formControl, handleSubmit, loading = false, edit = false }) => {
         </div>
         <div className="col-sm-7">
           <div className="form-group">
-            <Input
+            <Select
               label={`${intl.formatMessage(messages.form.cityLabel)} *`}
-              type="text"
               name="city"
               className="form-control"
-              placeholder={intl.formatMessage(messages.form.cityDescription)}
+              placeholderValue={intl.formatMessage(messages.form.cityDescription)}
+              options={cities}
               ref={formControl.register({ required: true })}
               error={formControl.errors.city}
+              loadingOptions={loadingCities}
             />
             {formControl.errors.city && (
               <InputError>

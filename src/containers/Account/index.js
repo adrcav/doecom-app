@@ -28,10 +28,15 @@ const Account = ({ refetchParent }) => {
   const auth = useContext(AuthContext);
   const [{ account }] = useStateValue();
   const [loadingUpload, setLoadingUpload] = useState(false);
+  const [cities, setCities] = useState([]);
 
   const [{ loading }, updateAccount] = useAxios({
     url: '/account',
     method: 'PATCH'
+  }, { manual: true });
+
+  const [{ loading: loadingCities }, getCities] = useAxios({
+    method: 'GET'
   }, { manual: true });
 
   if (!auth.isAuthenticated()) {
@@ -52,10 +57,25 @@ const Account = ({ refetchParent }) => {
   } = form;
 
   useEffect(() => {
-    if (account._id) {
-      reset({...account});
-    }
-  }, [account, reset]);
+    (async function () {
+      if (account._id) {
+        const values = { ...account };
+        values.state = null;
+        values.city = null;
+        reset(values);
+
+        try {
+          const { data: response } = await getCities(`/locales/states/${account.state}/cities`);
+          if (response && response.error) throw response.error;
+          setCities(response.map(city => ({ value: city.nome, text: city.nome })));
+        } catch (error) {
+          toast.error(intl.formatMessage(errorMessage(error.code)));
+        }
+
+        reset(account);
+      }
+    })();
+  }, [account, reset, getCities, intl]);
 
   const handleAccount = async (values) => {
     try {
@@ -78,6 +98,22 @@ const Account = ({ refetchParent }) => {
     setLoadingUpload(false);
     if (data && data.error) throw data.error;
     return data.link;
+  };
+
+  const handleStateChange = async (event, state = '') => {
+    const value = event.target.value || state;
+    if (!value || !value.length) {
+      setCities([]);
+      return false;
+    }
+
+    try {
+      const { data } = await getCities(`/locales/states/${value}/cities`);
+      if (data && data.error) throw data.error;
+      setCities(data.map(city => ({ value: city.nome, text: city.nome })));
+    } catch (error) {
+      toast.error(intl.formatMessage(errorMessage(error.code)));
+    }
   };
 
   return (
@@ -173,6 +209,8 @@ const Account = ({ refetchParent }) => {
                     options={states}
                     ref={register({ required: true })}
                     error={errors.state}
+                    onChange={handleStateChange}
+                    loadingOptions={loadingCities}
                   />
                   {errors.state && (
                     <InputError>
@@ -183,14 +221,15 @@ const Account = ({ refetchParent }) => {
               </div>
               <div className="col-7">
                 <div className="form-group">
-                  <Input
+                  <Select
                     label={`${intl.formatMessage(messages.cityLabel)} *`}
-                    type="text"
                     name="city"
                     className="form-control"
                     placeholder={intl.formatMessage(messages.nameDescription)}
+                    options={cities}
                     ref={register({ required: true })}
                     error={errors.city}
+                    loadingOptions={loadingCities}
                   />
                   {errors.city && (
                     <InputError>

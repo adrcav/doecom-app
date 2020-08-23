@@ -25,10 +25,15 @@ export const Register = () => {
   const auth = useContext(AuthContext);
   const { register, watch, handleSubmit, errors } = useForm();
   const [agreedTerms, setAgreedTerms] = useState(false);
+  const [cities, setCities] = useState([]);
 
   const [{ loading }, registerAccount] = useAxios({
     url: '/account/register',
     method: 'POST'
+  }, { manual: true });
+
+  const [{ loading: loadingCities }, getCities] = useAxios({
+    method: 'GET'
   }, { manual: true });
 
   const states = dataStates.map(state => ({ value: state.uf, text: state.name }));
@@ -37,7 +42,7 @@ export const Register = () => {
     if (auth.isAuthenticated()) {
       history.push('/');
     }
-  });
+  }, [auth, history]);
 
   const handleRegister = async (values) => {
     try {
@@ -45,6 +50,22 @@ export const Register = () => {
       const { data } = await registerAccount({ data: values });
       if (data && data.error) throw data.error;
       history.push('/register/success');
+    } catch (error) {
+      toast.error(intl.formatMessage(errorMessage(error.code)));
+    }
+  };
+
+  const handleStateChange = async (event) => {
+    const value = event.target.value;
+    if (!value || !value.length) {
+      setCities([]);
+      return false;
+    }
+
+    try {
+      const { data } = await getCities(`/locales/states/${value}/cities`);
+      if (data && data.error) throw data.error;
+      setCities(data.map(city => ({ value: city.nome, text: city.nome })));
     } catch (error) {
       toast.error(intl.formatMessage(errorMessage(error.code)));
     }
@@ -117,6 +138,7 @@ export const Register = () => {
                     options={states}
                     ref={register({ required: true })}
                     error={errors.state}
+                    onChange={handleStateChange}
                   />
                   {errors.state && (
                     <InputError>
@@ -127,14 +149,15 @@ export const Register = () => {
               </div>
               <div className="col-7">
                 <div className="form-group">
-                  <Input
+                  <Select
                     label={`${intl.formatMessage(messages.form.cityLabel)} *`}
-                    type="text"
                     name="city"
                     className="form-control"
-                    placeholder={intl.formatMessage(messages.form.cityDescription)}
+                    placeholderValue={intl.formatMessage(messages.form.cityDescription)}
+                    options={cities}
                     ref={register({ required: true })}
                     error={errors.city}
+                    loadingOptions={loadingCities}
                   />
                   {errors.city && (
                     <InputError>

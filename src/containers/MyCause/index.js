@@ -25,6 +25,7 @@ const MyCause = () => {
   const auth = useContext(AuthContext);
   const [{ account }] = useStateValue();
   const [loadingUpload, setLoadingUpload] = useState(false);
+  const [cities, setCities] = useState([]);
 
   const form = useForm({
     defaultValues: {}
@@ -34,6 +35,10 @@ const MyCause = () => {
   const [{ loading }, registerCause] = useAxios({
     url: '/causes',
     method: 'POST'
+  }, { manual: true });
+
+  const [{ loading: loadingCities }, getCities] = useAxios({
+    method: 'GET'
   }, { manual: true });
 
   useEffect(() => {
@@ -72,6 +77,22 @@ const MyCause = () => {
     setLoadingUpload(false);
     if (data && data.error) throw data.error;
     return data.link;
+  };
+
+  const handleStateChange = async (event, state = '') => {
+    const value = event.target.value || state;
+    if (!value || !value.length) {
+      setCities([]);
+      return false;
+    }
+
+    try {
+      const { data } = await getCities(`/locales/states/${value}/cities`);
+      if (data && data.error) throw data.error;
+      setCities(data.map(city => ({ value: city.nome, text: city.nome })));
+    } catch (error) {
+      toast.error(intl.formatMessage(errorMessage(error.code)));
+    }
   };
 
   return (
@@ -136,6 +157,9 @@ const MyCause = () => {
                 handleSubmit={handleSubmit(handleRegisterCause)}
                 formControl={form}
                 loading={loading || loadingUpload}
+                cities={cities}
+                loadingCities={loadingCities}
+                changeState={handleStateChange}
               />
             </div>
           </div>

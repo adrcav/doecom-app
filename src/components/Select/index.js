@@ -8,6 +8,12 @@ const Select = React.forwardRef((props, ref) => {
   return (
     <div className="d-flex flex-column-reverse">
       <InputGroup className={classNames({ 'input--error': props.error })}>
+        <div className={classNames('InputGroup__loading', {
+          'InputGroup__loading--show': props.loadingOptions
+        })}>
+          <div className="InputGroup__spinner"></div>
+        </div>
+
         <Container
           {...props}
           className={classNames({ 'input--error': props.error })}
