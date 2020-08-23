@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAxios from 'axios-hooks';
+import ContentLoader from 'react-content-loader';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-import { LoadingSpinner } from '../../components/styles';
 import BackButton from '../../components/BackButton';
 import Title from '../../components/Title';
 import MyCause from '../../components/MyCause';
@@ -56,7 +56,18 @@ const MyCauses = ({ refetchParent }) => {
 
       {!causes || loading ? (
         <div className="row justify-content-center">
-          <LoadingSpinner />
+          <div className="col-12">
+            <ContentLoader
+              speed={2}
+              width="100%"
+              height="80px"
+              viewBox="0 0 100% 80px"
+              backgroundColor="#eaeced"
+              foregroundColor="#f5f5f5"
+            >
+              <rect x="0" y="0" rx="4" ry="4" width="100%" height="80px" />
+            </ContentLoader>
+          </div>
         </div>
       ) : (
         <div className="row">

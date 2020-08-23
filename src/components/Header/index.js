@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa';
 import classNames from 'classnames';
+import ContentLoader from 'react-content-loader';
 import { useIntl, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -93,11 +94,26 @@ const Header = ({ userInfo }) => {
                     <strong>{userInfo.name ? userInfo.name.split(' ')[0] : ''}</strong>
                   </p>
                 )}
-                <img
-                  src={getAccountAvatar(userInfo)}
-                  alt={userInfo.name || 'Sem avatar'}
-                  onClick={handleMenuClick}
-                />
+
+                {auth.isAuthenticated() && !userInfo._id ? (
+                  <ContentLoader
+                    speed={2}
+                    width={50}
+                    height={50}
+                    viewBox="0 0 50 50"
+                    backgroundColor="#eaeced"
+                    foregroundColor="#f5f5f5"
+                  >
+                    <circle cx="25" cy="25" r="25" />
+                  </ContentLoader>
+                ) : (
+                  <img
+                    src={getAccountAvatar(userInfo)}
+                    alt={userInfo.name || 'Sem avatar'}
+                    onClick={handleMenuClick}
+                  />
+                )}
+
                 <div
                   className={classNames('button-menu-expand', {
                     'rotate': showMenu

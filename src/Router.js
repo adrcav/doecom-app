@@ -12,7 +12,6 @@ import { errorMessage } from './services/errors';
 import { margins } from './components/theme';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Loading from './components/Loading';
 import HeaderNotification from './components/HeaderNotification';
 
 import GiveSuccess from './components/GiveSuccess';
@@ -41,7 +40,8 @@ const Router = () => {
   const auth = useContext(AuthContext);
   const [{ account }, dispatch] = useStateValue();
 
-  const [{ loading, error }, loadAccount] = useAxios('/account', { manual: true });
+  const [{ error }, loadAccount] = useAxios('/account', { manual: true });
+  const [{ error: errorLocale }, loadLocale] = useAxios('/locales', { manual: true });
   const [{ error: errorMyCauses }, loadMyCauses] = useAxios('/causes/my-causes', { manual: true });
 
   const [{ loading: loadingResendVerification }, resendVerification] = useAxios({
@@ -64,10 +64,20 @@ const Router = () => {
       });
     };
 
+    const loadDataLocale = async () => {
+      const { data: dataLocale } = await loadLocale();
+      dispatch({
+        type: 'updateLocale',
+        value: dataLocale
+      });
+    };
+
     if (auth.isAuthenticated()) {
       loadData();
     }
-  }, [loadAccount, loadMyCauses, dispatch, auth]);
+
+    loadDataLocale();
+  }, [loadAccount, loadLocale, loadMyCauses, dispatch, auth]);
 
   const refetchAccount = async () => {
     const { data: dataAccount } = await loadAccount();
@@ -95,15 +105,12 @@ const Router = () => {
     }
   };
 
-  if (error || errorMyCauses) return (
+  if (error || errorLocale || errorMyCauses) return (
     <p>Service error!</p>
   );
 
   return (
     <BrowserRouter>
-      {loading && (
-        <Loading />
-      )}
       <Header userInfo={account} />
       <div style={{ marginTop: margins.header }}>
         {account._id && !account.verified && (

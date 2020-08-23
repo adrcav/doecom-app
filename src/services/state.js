@@ -12,7 +12,8 @@ export const useStateValue = () => useContext(StateContext);
 
 export const initialState = {
   account: {},
-  myCauses: null
+  myCauses: null,
+  locale: null
 };
 
 export const reducer = (state, action) => {
@@ -26,6 +27,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         myCauses: action.value
+      };
+    case 'updateLocale':
+      return {
+        ...state,
+        locale: action.value
       };
     default:
       return state;
