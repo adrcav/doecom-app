@@ -10,7 +10,7 @@ export const Badge = styled.div`
   width: 20px;
   height: 20px;
   background-color: ${colors.asset.info};
-  border: 1.5px solid white;
+  border: 2px solid white;
   margin-left: 5px;
   border-radius: 50%;
 
