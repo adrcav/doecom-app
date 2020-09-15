@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const { REACT_APP_API_BASE_URL } = process.env;
+const { REACT_APP_API_BASE_URL, REACT_APP_GEOCODE_API_URL } = process.env;
 
 export default class Api {
 
@@ -18,6 +18,21 @@ export default class Api {
       return config;
     });
 
+    this.axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if ([401, 403].includes(error.response.status)) {
+          auth.logout();
+          window.location.href = '/';
+        }
+        else if (error.response && error.response.data) {
+          return Promise.reject(error.response.data);
+        }
+        else {
+          return Promise.reject(error.message);
+        }
+    });
+
     Api.instance = this;
     return this;
   }
@@ -30,6 +45,10 @@ export default class Api {
       formData,
       { headers: { 'Content-Type': 'multipart/form-data' } }
     );
+  }
+
+  getLocaleByCoordinates(lat, lng) {
+    return this.axios.get(`/${lat},${lng}?geoit=json`, { baseURL: REACT_APP_GEOCODE_API_URL });
   }
 
 };
