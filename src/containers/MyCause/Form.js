@@ -12,6 +12,8 @@ import ImageUpload from '../../components/ImageUpload';
 
 import { states as dataStates } from '../../util/data';
 
+const { REACT_APP_HELP_PAYMENT_URL } = process.env;
+
 const Form = ({
   formControl,
   handleSubmit,
@@ -32,7 +34,7 @@ const Form = ({
           label={`${intl.formatMessage(messages.form.nameLabel)} *`}
           type="text"
           name="name"
-          maxlength="40"
+          maxLength="40"
           className="form-control"
           placeholder={intl.formatMessage(messages.form.nameDescription)}
           ref={formControl.register({ required: true })}
@@ -262,7 +264,7 @@ const Form = ({
       <div className="form-group">
         <div className="d-flex justify-content-between">
           <Label value={`${intl.formatMessage(messages.form.paymentUrlLabel)} *`} error={formControl.errors.paymentUrl} />
-          <a href="https://help.doecom.org/pt-br/article/o-que-significa-o-link-de-doacao-1hw3z1l/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '.9rem', fontWeight: 500, marginLeft: '3px' }}>
+          <a href={REACT_APP_HELP_PAYMENT_URL} target="_blank" rel="noopener noreferrer" style={{ fontSize: '.9rem', fontWeight: 500, marginLeft: '3px' }}>
             <FormattedMessage {...messages.form.paymentUrlHelp} />
           </a>
         </div>
