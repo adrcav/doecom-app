@@ -55,6 +55,10 @@
   "notFound.text": "A página que você procura pode ter sido removida, renomeada ou está temporariamente indisponível.",
   "notFound.goToHome": "Voltar ao início",
 
+  "serviceError.text": "Ocorreu um erro durante a tentativa de conexão com os servidores da Doecom.",
+  "serviceError.goToHome": "Ir para a Página Principal",
+  "serviceError.goToLogin": "Ir para o Login",
+
   "register.terms.title": "Você está prestes a se cadastrar na plataforma Doecom",
   "register.terms.description": "Ao se cadastrar você estará concordando com os seguintes termos de utilização:",
   "register.terms.buttonSubmit": "Concordar com os termos e continuar",

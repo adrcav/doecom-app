@@ -34,15 +34,16 @@ import Logout from './containers/Logout';
 import PrivacyPolicy from './containers/PrivacyPolicy';
 import TermsOfUse from './containers/TermsOfUse';
 import NotFound from './containers/NotFound';
+import ServiceError from './containers/ServiceError';
 
 const Router = () => {
   const intl = useIntl();
   const auth = useContext(AuthContext);
   const [{ account }, dispatch] = useStateValue();
 
-  const [{ error }, loadAccount] = useAxios('/account', { manual: true });
-  const [{ error: errorLocale }, loadLocale] = useAxios('/locales', { manual: true });
-  const [{ error: errorMyCauses }, loadMyCauses] = useAxios('/causes/my-causes', { manual: true });
+  const [, loadAccount] = useAxios('/account', { manual: true });
+  const [, loadLocale] = useAxios('/locales', { manual: true });
+  const [, loadMyCauses] = useAxios('/causes/my-causes', { manual: true });
 
   const [{ loading: loadingResendVerification }, resendVerification] = useAxios({
     method: 'POST',
@@ -104,10 +105,6 @@ const Router = () => {
       toast.error(intl.formatMessage(errorMessage(error.code)));
     }
   };
-
-  if (error || errorLocale || errorMyCauses) return (
-    <p>Service error!</p>
-  );
 
   return (
     <BrowserRouter>
@@ -180,6 +177,7 @@ const Router = () => {
           <Route path="/logout" component={Logout} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/terms-of-use" component={TermsOfUse} />
+          <Route path="/unavailable" component={ServiceError} exact />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

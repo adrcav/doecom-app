@@ -6,6 +6,8 @@ import messages from './messages';
 
 import { Container } from './styles';
 
+const { REACT_APP_HELP_URL } = process.env;
+
 const Footer = () => (
   <div className="container">
     <hr />
@@ -13,7 +15,7 @@ const Footer = () => (
       <p>&copy; {moment().format('YYYY')} Doecom</p>
       <ul>
         <li>
-          <a href="https://help.doecom.org" target="_blank" rel="noopener noreferrer">
+          <a href={REACT_APP_HELP_URL} target="_blank" rel="noopener noreferrer">
             <p>
               <FormattedMessage {...messages.help} />
             </p>
